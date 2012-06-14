@@ -1,10 +1,10 @@
 Ti.include('/util.js');
 Ti.include('/data.js');
-Ti.include('/club_data.js');
+Ti.include('/clubs_data.js');
 
 var table;
 
-table = Util.createSimpleDataTable(clubData, {
+table = Util.createSimpleDataTable(clubsData, {
   'table': {
     style: Ti.UI.iPhone.TableViewStyle.GROUPED
   },
