@@ -1,4 +1,4 @@
-var clubs = [
+var societyData = [
   "Aikido",
   "American Football",
   "Athletics and X-Country",

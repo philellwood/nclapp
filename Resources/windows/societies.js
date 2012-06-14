@@ -1,13 +1,12 @@
 Ti.include('/util.js');
-Ti.include('/clubs.js');
-
-
-Ti.UI.currentWindow.add(Util.createSimpleDataTable(clubs));
+Ti.include('/society_data.js');
 
 var table;
 
-table = Util.createSimpleDataTable(clubs, {
-  'table': { },
+table = Util.createSimpleDataTable(societyData, {
+  'table': {
+    style: Ti.UI.iPhone.TableViewStyle.GROUPED
+  },
   'row': { }
 });
 
@@ -17,4 +16,3 @@ table.addEventListener('click', function (e) {
 });
 
 Ti.UI.currentWindow.add(table);
-
