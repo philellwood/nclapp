@@ -1,4 +1,4 @@
 Ti.include('/util.js');
-Ti.UI.currentWindow.add(
-	createClubTable()
-);
+Ti.include('/clubs.js');
+
+Ti.UI.currentWindow.add(Util.createSimpleDataTable(clubs));
