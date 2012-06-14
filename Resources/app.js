@@ -4,60 +4,86 @@ Titanium.UI.setBackgroundColor('#000');
 // create tab group
 var tabGroup = Titanium.UI.createTabGroup();
 
+ var url = "http://www.appcelerator.com";
+ var data = {
+ 	"j_username" : "",
+ 	"j_password": "",
+ 	"_eventId": "submit",
+ 	"lt": "_cB8BEF356-4A66-B43D-6984-5DB016986296_k7B1A2967-9FA6-8E2C-C9E2-2EFE1CA72027"
+ };
+ var client = Ti.Network.createHTTPClient({
+     // function called when the response data is available
+     onload : function(e) {
+         Ti.API.info("Received text: " + this.responseText);
+         alert('success');
+     },
+     // function called when an error occurs, including a timeout
+     onerror : function(e) {
+         Ti.API.debug(e.error);
+         alert('error');
+     },
+     timeout : 5000  // in milliseconds
+ });
+ // Prepare the connection.
+ client.open("POST", url);
+ // Send the request.
+ client.send(data); 
+
+
 
 //
 // create base UI tab and root window
 //
-var win1 = Titanium.UI.createWindow({  
-    title:'Tab 1',
+var timetableWindow = Titanium.UI.createWindow({  
+    title:'Timetable',
     backgroundColor:'#fff'
 });
-var tab1 = Titanium.UI.createTab({  
+var timetableTab = Titanium.UI.createTab({  
     icon:'KS_nav_views.png',
     title:'Tab 1',
-    window:win1
+    window:timetableWindow
 });
 
 var label1 = Titanium.UI.createLabel({
 	color:'#999',
-	text:'I am Window 1',
+	text:'Timetable',
 	font:{fontSize:20,fontFamily:'Helvetica Neue'},
 	textAlign:'center',
 	width:'auto'
 });
 
-win1.add(label1);
+timetableWindow.add(label1);
 
 //
 // create controls tab and root window
 //
-var win2 = Titanium.UI.createWindow({  
-    title:'Tab 2',
+var printWindow = Titanium.UI.createWindow({  
+    title:'Print credits',
     backgroundColor:'#fff'
 });
-var tab2 = Titanium.UI.createTab({  
+var printTab = Titanium.UI.createTab({  
     icon:'KS_nav_ui.png',
     title:'Tab 2',
-    window:win2
+    window:printWindow
 });
 
 var label2 = Titanium.UI.createLabel({
 	color:'#999',
-	text:'I am Window 2',
+	text:'Print Credits',
 	font:{fontSize:20,fontFamily:'Helvetica Neue'},
 	textAlign:'center',
 	width:'auto'
 });
 
-win2.add(label2);
+printWindow.add(label2);
 
 
 
 //
 //  add tabs
 //
-tabGroup.addTab(tab1);  
-tabGroup.addTab(tab2);  
+tabGroup.addTab(timetableTab);  
+tabGroup.addTab(printTab);  
 
 
 // open tab group
