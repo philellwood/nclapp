@@ -1,4 +1,4 @@
-[ "Aikido",
+var clubs = [ "Aikido",
   "American Football",
   "Athletics and X-Country",
   "Badminton",
@@ -211,4 +211,4 @@
   "Women for Women International",
   "Woolsock",
   "Yoga",
-  "Zumba" ]
+  "Zumba" ];
