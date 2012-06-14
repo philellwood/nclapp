@@ -1,48 +1,15 @@
-var Cloud = require('ti.cloud');
+Ti.include('/util.js');
 
 Ti.UI.setBackgroundColor('#000');
 
-var tabGroup,
-    feedWindow,
-    feedTab,
-    societiesWindow,
-    societiesTab;
+Util.buildTabGroup([
 
+  { 'title': "Your Feed",
+    'url': "windows/feed.js",
+    'icon': "KS_nav_views.png" },
 
-//  The Feed Page
-Feed_Page: {
-  feedWindow = Ti.UI.createWindow({  
-      title: 'Your Feed',
-      backgroundColor: '#fff',
-      url: 'windows/feed.js'
-  });
-  feedTab = Ti.UI.createTab({  
-      icon: 'KS_nav_views.png',
-      title: 'Your Feed',
-      window: feedWindow
-  });
-};
+  { 'title': "Societies",
+    'url': "windows/societies.js",
+    'icon': "KS_nav_ui.png" }
 
-//  The Societies Page
-Societies_Page: {
-  societiesWindow = Ti.UI.createWindow({  
-      title: 'Societies',
-      backgroundColor: '#fff',
-      url: 'windows/societies.js'
-  });
-  societiesTab = Ti.UI.createTab({  
-      icon: 'KS_nav_ui.png',
-      title: 'Societies',
-      window: societiesWindow
-  });
-};
-
-//  Create a new tab group
-tabGroup = Ti.UI.createTabGroup();
-
-//  Add the tabs
-tabGroup.addTab(feedTab);  
-tabGroup.addTab(societiesTab);  
-
-//  Show the tab group
-tabGroup.open();
+]).open();
