@@ -8,8 +8,8 @@ Util.buildTabGroup([
     'url': "windows/feed.js",
     'icon': "KS_nav_views.png" },
 
-  { 'title': "Societies",
-    'url': "windows/societies.js",
+  { 'title': "Clubs",
+    'url': "windows/clubs.js",
     'icon': "KS_nav_ui.png" }
 
 ]).open();
