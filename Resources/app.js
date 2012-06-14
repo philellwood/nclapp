@@ -4,10 +4,10 @@ Titanium.UI.setBackgroundColor('#000');
 // create tab group
 var tabGroup = Titanium.UI.createTabGroup();
 
- var url = "http://www.appcelerator.com";
+ var url = "https://gateway.ncl.ac.uk/idp/Authn/UserPassword";
  var data = {
- 	"j_username" : "",
- 	"j_password": "",
+ 	"j_username" : "a8005833",
+ 	"j_password": "jhgkhgvmhg",
  	"_eventId": "submit",
  	"lt": "_cB8BEF356-4A66-B43D-6984-5DB016986296_k7B1A2967-9FA6-8E2C-C9E2-2EFE1CA72027"
  };
@@ -15,6 +15,7 @@ var tabGroup = Titanium.UI.createTabGroup();
      // function called when the response data is available
      onload : function(e) {
          Ti.API.info("Received text: " + this.responseText);
+         Ti.API.log("response headers: " + this.allResponseHeaders);
          alert('success');
      },
      // function called when an error occurs, including a timeout
