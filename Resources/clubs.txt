@@ -1,214 +1,214 @@
-Aikido
-American Football
-Athletics and X-Country
-Badminton
-Basketball (Mens)
-Basketball (Womens)
-Boat
-Boxing
-Canoe
-Canoe Polo
-Caving
-Cheerleading
-Clay Target Shooting
-Cricket
-Cycling
-Fencing
-Football (Mens)
-Football (Womens)
-Gaelic Football
-Golf
-Gymnastics 
-Handball
-Hockey (Ladies)
-Hockey (Mens)
-Ice Hockey
-Jitsu
-Judo
-Kendo
-Kickboxing
-Kite & Windsurfing
-Lacrosse (Mens)
-Lacrosse (Womens)
-Mountaineering
-Netball
-Ninjutsu
-Orienteering & Adventure 
-Parachute
-Polo
-Real Tennis
-Riding
-Rifle
-Rugby (Mens)
-Rugby (Womens)
-Rugby League
-Sailing & Yachting
-Ski & Snowboarding
-Shotokan Karate
-Squash (Mens)
-Squash (Womens)
-Sub Aqua
-Surf
-Swimming & Water polo
-Table Tennis
-Taekwondo
-Tennis
-Thai Boxing
-Trampoline
-Triathlon
-Ultimate Frisbee
-Weightlifting
-Volleyball
-Accounting
-Afro-Caribbean
-Agrics
-AIESEC
-Amnesty International
-Anglo Chinese
-Anglo Japanese
-Anime
-Archaeology
-Architectural
-Art
-BIO SCI (Bio Medical Sciences)
-BioSoc (Biology)
-Bright Futures
-Bulgarian
-Catholic Society
-Ceilidh
-Chemical Engineering
-Chess
-Chinese Students and Scholars Association
-Circus Skills
-Civil Engineering and Geosciences (CEG)
-ClasSoc
-Cocktail
-Coco
-Computing Music
-Combined Studies
-Conservation Society
-Conservative Future
-Creative Writing
-Culture and Heritage Studies Society
-Dance
-Darts (NUDS)
-Debating
-DESI
-Disney Soc
-DJ
-Economics Society
-Eldon (Law)
-ELSA Newcastle (European Law Students Assocation)
-Eng Soc
-Engineers without borders
-Entrepreneur
-Erasmus
-Fellwalking
-Feminist
-Film
-Friends of Medecins Sans Frontieres
-Gaming
-Geography Society
-Gilbert and Sullivan
-Golf Society
-Hellenic
-Hindu & Sikh
-History Society
-Hitch Soc
-Hong Kong
-Hong Kong Law Club
-Indonesian
-International
-International Development
-Irish Dance
-Islamic
-Jazz Orchestra
-Jewish Society
-Joint Honours
-Kids Action Overseas (KAOS)
-Kurdish
-Labour
-Latin and Ballroom Society
-LGBT Society
-Libyan Society
-Linguistics Society
-LINKS
-Lithuanian
-MAD Soc
-Malaysian Society
-Management Society
-Marketing
-Marxist
-Maths
-Mature Students
-Mauritian Society
-Mediterranean Countries
-Medsin
-Modern Languages
-Motorsport Society
-Music Society
-Musical Medics
-Newcastle Comedy Society
-Newcastle Computing Society
-Newcastle Emergency Medicine Society
-Newcastle Free Education Network
-Newcastle Gourmet
-Newcastle Kazahstan Society
-Newcastle Save the Children
-Newcastle Student Orchestra & Choir
-Newcastle Swing Band
-Newcastle University Oxfam Society
-NUTS (Newcastle University Theatre Society)
-Nu:Think Newcastle University Skeptics Society
-Newcastle University Christian Union Society
-Newcastle University Social Tennis
-Newcastle University Nerd Society (NUNS)
-Nigerian Students Society
-Oikos Newcastle
-Orthopaedic 
-Pagan
-People and Planet
-Philosophy
-Photographic Society
-Pilates
-Planning
-Poker
-Pole Dancing
-Politics Society
-Pool
-Politics Postgraduate
-Psychology
-Psychiatry
-Rave Soc
-Real Ale and Cider Appreciation
-Rock Society
-Rugby Referee
-Saudi
-Shocksoc
-SIFE
-Singapore
-Socialist Worker Student Society
-Sociology
-Speech Therapy
-STAR
-Stop Aids Society
-Surgical
-Swing Dance Society
-Syrian Society
-Tango
-TCTV
-Thai
-Toga
-Trading and Investments Group
-Turkish
-Twenty Minute Society
-United Nations
-Vocal Harmony
-Wetsoc
-Wilderness Medicine
-Wider Mbarara
-Windband
-Women for Women International
-Woolsock
-Yoga
-Zumba
+[ "Aikido",
+  "American Football",
+  "Athletics and X-Country",
+  "Badminton",
+  "Basketball (Mens)",
+  "Basketball (Womens)",
+  "Boat",
+  "Boxing",
+  "Canoe",
+  "Canoe Polo",
+  "Caving",
+  "Cheerleading",
+  "Clay Target Shooting",
+  "Cricket",
+  "Cycling",
+  "Fencing",
+  "Football (Mens)",
+  "Football (Womens)",
+  "Gaelic Football",
+  "Golf",
+  "Gymnastics ",
+  "Handball",
+  "Hockey (Ladies)",
+  "Hockey (Mens)",
+  "Ice Hockey",
+  "Jitsu",
+  "Judo",
+  "Kendo",
+  "Kickboxing",
+  "Kite & Windsurfing",
+  "Lacrosse (Mens)",
+  "Lacrosse (Womens)",
+  "Mountaineering",
+  "Netball",
+  "Ninjutsu",
+  "Orienteering & Adventure ",
+  "Parachute",
+  "Polo",
+  "Real Tennis",
+  "Riding",
+  "Rifle",
+  "Rugby (Mens)",
+  "Rugby (Womens)",
+  "Rugby League",
+  "Sailing & Yachting",
+  "Ski & Snowboarding",
+  "Shotokan Karate",
+  "Squash (Mens)",
+  "Squash (Womens)",
+  "Sub Aqua",
+  "Surf",
+  "Swimming & Water polo",
+  "Table Tennis",
+  "Taekwondo",
+  "Tennis",
+  "Thai Boxing",
+  "Trampoline",
+  "Triathlon",
+  "Ultimate Frisbee",
+  "Weightlifting",
+  "Volleyball",
+  "Accounting",
+  "Afro-Caribbean",
+  "Agrics",
+  "AIESEC",
+  "Amnesty International",
+  "Anglo Chinese",
+  "Anglo Japanese",
+  "Anime",
+  "Archaeology",
+  "Architectural",
+  "Art",
+  "BIO SCI (Bio Medical Sciences)",
+  "BioSoc (Biology)",
+  "Bright Futures",
+  "Bulgarian",
+  "Catholic Society",
+  "Ceilidh",
+  "Chemical Engineering",
+  "Chess",
+  "Chinese Students and Scholars Association",
+  "Circus Skills",
+  "Civil Engineering and Geosciences (CEG)",
+  "ClasSoc",
+  "Cocktail",
+  "Coco",
+  "Computing Music",
+  "Combined Studies",
+  "Conservation Society",
+  "Conservative Future",
+  "Creative Writing",
+  "Culture and Heritage Studies Society",
+  "Dance",
+  "Darts (NUDS)",
+  "Debating",
+  "DESI",
+  "Disney Soc",
+  "DJ",
+  "Economics Society",
+  "Eldon (Law)",
+  "ELSA Newcastle (European Law Students Assocation)",
+  "Eng Soc",
+  "Engineers without borders",
+  "Entrepreneur",
+  "Erasmus",
+  "Fellwalking",
+  "Feminist",
+  "Film",
+  "Friends of Medecins Sans Frontieres",
+  "Gaming",
+  "Geography Society",
+  "Gilbert and Sullivan",
+  "Golf Society",
+  "Hellenic",
+  "Hindu & Sikh",
+  "History Society",
+  "Hitch Soc",
+  "Hong Kong",
+  "Hong Kong Law Club",
+  "Indonesian",
+  "International",
+  "International Development",
+  "Irish Dance",
+  "Islamic",
+  "Jazz Orchestra",
+  "Jewish Society",
+  "Joint Honours",
+  "Kids Action Overseas (KAOS)",
+  "Kurdish",
+  "Labour",
+  "Latin and Ballroom Society",
+  "LGBT Society",
+  "Libyan Society",
+  "Linguistics Society",
+  "LINKS",
+  "Lithuanian",
+  "MAD Soc",
+  "Malaysian Society",
+  "Management Society",
+  "Marketing",
+  "Marxist",
+  "Maths",
+  "Mature Students",
+  "Mauritian Society",
+  "Mediterranean Countries",
+  "Medsin",
+  "Modern Languages",
+  "Motorsport Society",
+  "Music Society",
+  "Musical Medics",
+  "Newcastle Comedy Society",
+  "Newcastle Computing Society",
+  "Newcastle Emergency Medicine Society",
+  "Newcastle Free Education Network",
+  "Newcastle Gourmet",
+  "Newcastle Kazahstan Society",
+  "Newcastle Save the Children",
+  "Newcastle Student Orchestra & Choir",
+  "Newcastle Swing Band",
+  "Newcastle University Oxfam Society",
+  "NUTS (Newcastle University Theatre Society)",
+  "Nu:Think Newcastle University Skeptics Society",
+  "Newcastle University Christian Union Society",
+  "Newcastle University Social Tennis",
+  "Newcastle University Nerd Society (NUNS)",
+  "Nigerian Students Society",
+  "Oikos Newcastle",
+  "Orthopaedic ",
+  "Pagan",
+  "People and Planet",
+  "Philosophy",
+  "Photographic Society",
+  "Pilates",
+  "Planning",
+  "Poker",
+  "Pole Dancing",
+  "Politics Society",
+  "Pool",
+  "Politics Postgraduate",
+  "Psychology",
+  "Psychiatry",
+  "Rave Soc",
+  "Real Ale and Cider Appreciation",
+  "Rock Society",
+  "Rugby Referee",
+  "Saudi",
+  "Shocksoc",
+  "SIFE",
+  "Singapore",
+  "Socialist Worker Student Society",
+  "Sociology",
+  "Speech Therapy",
+  "STAR",
+  "Stop Aids Society",
+  "Surgical",
+  "Swing Dance Society",
+  "Syrian Society",
+  "Tango",
+  "TCTV",
+  "Thai",
+  "Toga",
+  "Trading and Investments Group",
+  "Turkish",
+  "Twenty Minute Society",
+  "United Nations",
+  "Vocal Harmony",
+  "Wetsoc",
+  "Wilderness Medicine",
+  "Wider Mbarara",
+  "Windband",
+  "Women for Women International",
+  "Woolsock",
+  "Yoga",
+  "Zumba" ]
