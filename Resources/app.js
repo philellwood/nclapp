@@ -13,7 +13,8 @@ var tabGroup,
 Feed_Page: {
   feedWindow = Ti.UI.createWindow({  
       title: 'Your Feed',
-      backgroundColor: '#fff'
+      backgroundColor: '#fff',
+      url: 'windows/feed.js'
   });
   feedTab = Ti.UI.createTab({  
       icon: 'KS_nav_views.png',
@@ -26,7 +27,8 @@ Feed_Page: {
 Societies_Page: {
   societiesWindow = Ti.UI.createWindow({  
       title: 'Societies',
-      backgroundColor: '#fff'
+      backgroundColor: '#fff',
+      url: 'windows/societies.js'
   });
   societiesTab = Ti.UI.createTab({  
       icon: 'KS_nav_ui.png',
