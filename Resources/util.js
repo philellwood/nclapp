@@ -1,14 +1,17 @@
 var Util = {};
 
-Util.createSimpleDataTable = function (input) {
-  var tableData, i, len;
-  tableData = [];
-  for (i = 0, len = input.length; i < len; i += 1){
-    tableData.push({title : input[i]});
+Util.createSimpleDataTable = function (input, properties) {
+  var rows, i, len, tableProps, rowProps;
+  
+  rows = [];
+  tableProps = (properties && properties.table) || {};
+  rowProps = (properties && properties.row) || {};
+  
+  for (i = 0, len = input.length; i < len; i += 1) {
+    rows.push(Util.merge(rowProps, { 'title': input[i] }));
   }
-  return Ti.UI.createTableView({
-    data: tableData
-  });;
+  
+  return Ti.UI.createTableView(Util.merge(tableProps, {'data': rows}));
 };
 
 Util.buildTabGroup = function (data) {
@@ -36,4 +39,20 @@ Util.buildTabGroup = function (data) {
   return Ti.UI.createTabGroup({
     'tabs': tabs
   });
+};
+
+Util.merge = function () {
+  var i, len, obj, k, result;
+  result = {};
+  for (i = 0, len = arguments.length; i < len; i += 1) {
+    obj = arguments[i];
+    if (obj) {
+      for (k in obj) {
+        if (obj.hasOwnProperty(k)) {
+          result[k] = obj[k];
+        }
+      }
+    }
+  }
+  return result;
 };
