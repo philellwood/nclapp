@@ -1,23 +1,5 @@
 var Util = {};
 
-Util.getUserClubs = function(){
-	if (Ti.App.Properties.hasProperty('clubs')){
-		return Ti.App.Properties.getList('clubs');
-	}
-	
-};
-
-Util.subscribeToClub = function(clubName){
-	var currentClubs;
-	
-	if (Ti.App.Properties.hasProperty('clubs')){
-		currentClubs = Ti.App.Properties.getList('clubs');
-	}
-	
-	currentClubs.push(clubName);
-	
-	Ti.App.Properties.setList('clubs', currentClubs);
-};
 Util.createSimpleDataTable = function (input, properties) {
   var rows, i, len, tableProps, rowProps;
   
