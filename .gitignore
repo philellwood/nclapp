@@ -2,3 +2,6 @@ tmp
 *.class
 *.pyc
 *.pyo
+Resources/android
+Resources/iphone
+Resources/mobileweb
