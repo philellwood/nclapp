@@ -1,4 +1,7 @@
 Ti.include('/util.js');
-Ti.UI.currentWindow.add(
-	createClubTable()
-);
+
+var table = createClubTable();
+table.addEventListener('click',function(e){
+	e.rowData.backgroundColor = '#00FF00';
+});
+Ti.UI.currentWindow.add(table);
