@@ -25,8 +25,20 @@ table = Util.createSimpleDataTable(clubsData, {
 });
 
 table.addEventListener('click', function (e) {
-  e.rowData.updateLayout(SELECTED);
-  Data.subscribeToClub(e.rowData.title);
+  Ti.API.log(e);
+  Ti.API.log(e.rowData);
+  var title = e.rowData.title;
+  if (title in selectedClubs){
+  	e.rowData.updateLayout(UNSELECTED);
+  	Ti.API.log("in selected");
+  	Ti.API.log(selectedClubs);
+  	Data.unsubscribeToClub(e.rowData.title);
+  }else{
+  	e.rowData.updateLayout(SELECTED);
+  	Data.subscribeToClub(e.rowData.title);
+  }
+  
+  
 });
 
 Ti.UI.currentWindow.add(table);
