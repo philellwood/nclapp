@@ -18,3 +18,13 @@ Data.subscribeToClub = function(clubName) {
   clubs[clubName] = clubName;
   Data.setUserClubs(clubs);
 };
+
+Data.unsubscribeToClub = function(clubname){
+  var clubs = Data.getUserClubs();
+  delete clubs[clubName];
+  Data.setUserClubs(clubs);
+};
+
+Data.removeAllClubs = function(){
+	Ti.App.Properties.removeProperty(Data.CLUBS);
+};
