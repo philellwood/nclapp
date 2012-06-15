@@ -3,20 +3,18 @@ var Data = {};
 Data.CLUBS = 'clubs';
 
 Data.getUserClubs = function () {
-	if (Ti.App.Properties.hasProperty(Data.CLUBS)){
-		return Ti.App.Properties.getList(Data.CLUBS);
+	if (!Ti.App.Properties.hasProperty(Data.CLUBS)){
+  	Data.setUserClubs({});
 	}
-	
+	return JSON.parse(Ti.App.Properties.getString(Data.CLUBS));
 };
 
-Data.subscribeToClub = function(clubName){
-	var currentClubs;
-	
-	if (Ti.App.Properties.hasProperty(Data.CLUBS)){
-		currentClubs = Ti.App.Properties.getList(Data.CLUBS);
-	}
-	
-	currentClubs.push(clubName);
-	
-	Ti.App.Properties.setList(Data.CLUBS, currentClubs);
+Data.setUserClubs = function (clubs) {
+  Ti.App.Properties.setString(Data.CLUBS, JSON.stringify(clubs));
+};
+
+Data.subscribeToClub = function(clubName) {
+  var clubs = Data.getUserClubs();
+  clubs[clubName] = clubName;
+  Data.setUserClubs(clubs);
 };
