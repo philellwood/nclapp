@@ -1,10 +1,26 @@
-Welcome to your Appcelerator Titanium Mobile Project
+#NCLApp
 
-This is a blank project.  Start by editing your application's app.js to 
-make your first mobile project using Titanium.
+This is the app developed by [Phil Ellwood](http://philellwood.com) and [Liam Goodacre](http://liamgoodacre.com) for the [Newcastle University Appathon](http://www.nuappathon.co.uk).
 
+It is for clubs and societies to stay in contact with their members.
 
+##Structure
 
+The app is split into 3 sections:
+
+###Messages
+
+The messages received from the clubs a user is subscribed to.
+
+###Events
+
+Events from the societies.
+
+###Clubs
+
+The full list of clubs and societies a user can subscribe to.
+
+##Copyright
 ----------------------------------
 Stuff our legal folk make us say:
 
