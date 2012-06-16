@@ -8,8 +8,7 @@ SELECTED = {
   backgroundColor: '#0f0'
 };
 UNSELECTED = {
-  
-};
+  backgroundColor: '#fff'};
 
 selectedClubs = Data.getUserClubs();
 
@@ -18,6 +17,8 @@ table = Util.createSimpleDataTable(clubsData, {
     style: Ti.UI.iPhone.TableViewStyle.GROUPED
   },
   'row': {
+  	
+  	height: 40,
     process: function (club, object) {
       object.updateLayout(club in selectedClubs ? SELECTED : UNSELECTED);
     }
@@ -26,28 +27,21 @@ table = Util.createSimpleDataTable(clubsData, {
 
 table.addEventListener('click', function (e) {
   Ti.API.log(e);
-  Ti.API.log(e.rowData);
+  Ti.API.log(e.rowData.title);
   var title = e.rowData.title;
-  if (title in selectedClubs){
+  if (title in Data.getUserClubs()){
   	e.rowData.updateLayout(UNSELECTED);
   	Ti.API.log("in selected");
-  	Ti.API.log(selectedClubs);
   	Data.unsubscribeToClub(e.rowData.title);
+  	Ti.API.log(Data.getUserClubs());
   }else{
   	e.rowData.updateLayout(SELECTED);
+  	Ti.API.log("not in selected");
   	Data.subscribeToClub(e.rowData.title);
+  	Ti.API.log(Data.getUserClubs());
   }
   
   
 });
-var deleteButton = Ti.UI.createButton({
-   title: 'Unsubscribe from all Clubs',
-   width: 100,
-   height: 50
-});
-deleteButton.addEventListener('click',function(e)
-{
-	Data.removeAllClubs();
-	Titanium.API.info("Deleted clubs");
-});
+
 Ti.UI.currentWindow.add(table);
