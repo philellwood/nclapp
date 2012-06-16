@@ -19,7 +19,7 @@ Data.subscribeToClub = function(clubName) {
   Data.setUserClubs(clubs);
 };
 
-Data.unsubscribeToClub = function(clubname){
+Data.unsubscribeToClub = function(clubName){
   var clubs = Data.getUserClubs();
   delete clubs[clubName];
   Data.setUserClubs(clubs);
