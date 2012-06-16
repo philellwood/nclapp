@@ -1,14 +1,17 @@
 var Util = {};
 
 Util.createSimpleDataTable = function (input, properties) {
-  var rows, i, len, tableProps, rowProps;
+  var rows, row, i, len, tableProps, rowProps, process;
   
   rows = [];
   tableProps = (properties && properties.table) || {};
   rowProps = (properties && properties.row) || {};
+  process = (rowProps && rowProps.process) || function(){};
   
   for (i = 0, len = input.length; i < len; i += 1) {
-    rows.push(Util.merge(rowProps, { 'title': input[i] }));
+    row = Ti.UI.createTableViewRow(Util.merge(rowProps, { 'title': input[i] }));
+    process(input[i], row);
+    rows.push(row);
   }
   
   return Ti.UI.createTableView(Util.merge(tableProps, {'data': rows}));
