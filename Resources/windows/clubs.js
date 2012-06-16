@@ -40,5 +40,14 @@ table.addEventListener('click', function (e) {
   
   
 });
-
+var deleteButton = Ti.UI.createButton({
+   title: 'Unsubscribe from all Clubs',
+   width: 100,
+   height: 50
+});
+deleteButton.addEventListener('click',function(e)
+{
+	Data.removeAllClubs();
+	Titanium.API.info("Deleted clubs");
+});
 Ti.UI.currentWindow.add(table);
