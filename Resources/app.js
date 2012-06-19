@@ -4,8 +4,12 @@ Ti.UI.setBackgroundColor('#000');
 
 Util.buildTabGroup([
 
-  { 'title': "Your Feed",
-    'url': "windows/feed.js",
+  { 'title': "Messages",
+    'url': "windows/messages.js",
+    'icon': "KS_nav_views.png" },
+
+  { 'title': "Events",
+    'url': "windows/events.js",
     'icon': "KS_nav_views.png" },
 
   { 'title': "Clubs",
