@@ -30,7 +30,23 @@ createButton.addEventListener('click',function(e){
 	});
 	
 });
+var loginButton = Ti.UI.createButton({
+	top:200,
+  width: 300,
+  height: 50,
+  title: 'login'
+	
+});
+
+loginButton.addEventListener('click',function(e){
+	Users.login({
+		login: username.getValue(),
+		password: password.getValue(),
+		
+	});
+	
+});
 Ti.currentWindow.add(username);
 Ti.currentWindow.add(password);
 Ti.currentWindow.add(createButton);
-
+Ti.currentWindow.add(loginButton);
