@@ -8,14 +8,14 @@ Users.create = function(_data){
     username: _data.username,
     password: _data.password,
     password_confirmation: _data.confirmPassword,
-    first_name: firstName.value,
-    last_name: lastName.value,
+    //first_name: firstName.value,
+    //last_name: lastName.value,
     custom_fields: '{"clubs":""}' //arrays cant be queried, so store clubs as string
 }, function (e) {
     if (e.success) {
-		// user created successfully
+		Ti.API.log(e);
     } else {
-        // oops, something went wrong
+        Ti.API.error(e);// oops, something went wrong
     }
 });
 };

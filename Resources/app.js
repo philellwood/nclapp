@@ -14,6 +14,11 @@ Util.buildTabGroup([
 
   { 'title': "Clubs",
     'url': "windows/clubs.js",
-    'icon': "KS_nav_ui.png" }
+    'icon': "KS_nav_ui.png" },
+    
+  {
+  	'title':"Users",
+  	'url': "windows/users.js",
+  	'icon': "KS_nav_ui.png"}
 
 ]).open();
