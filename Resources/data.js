@@ -12,8 +12,8 @@ Data.getUserClubs = function () {
 Data.downloadClubs = function(){
   var custom_fields = JSON.parse(Users.showCurrent.custom_fields);
   Ti.API.debug(custom_fields);
-  var clubString = custom_fields.clubs;
-  return clubString.split(";");
+  return custom_fields.clubs;
+  
 };
 
 Data.updateCloudClubs = function(){
