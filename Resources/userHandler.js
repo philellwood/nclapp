@@ -1,3 +1,4 @@
+Ti.include(data.js);
 var Cloud = require('ti.cloud');
 Cloud.debug = true;
 
@@ -10,7 +11,7 @@ Users.create = function(_data){
     password_confirmation: _data.confirmPassword,
     //first_name: firstName.value,
     //last_name: lastName.value,
-    custom_fields: '{"clubs":""}' //arrays cant be queried, so store clubs as string
+    custom_fields: JSON.stringify(Data.getUserClubs()) //arrays cant be queried, so store clubs as string
 }, function (e) {
     if (e.success) {
 		Ti.API.log(e);
