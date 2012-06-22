@@ -5,3 +5,5 @@ tmp
 Resources/android
 Resources/iphone
 Resources/mobileweb
+Resources/build.log
+build
