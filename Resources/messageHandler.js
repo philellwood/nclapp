@@ -35,7 +35,17 @@ Messages.create = function(_data){
   	  body : _data.body,
   	  to_ids: userIds
   	} 
-  	sdk.sendRequest('messages/create.json', 'POST', data, callback);
+  	sdk.sendRequest('messages/create.json', 'POST', data, function(){
+  	  if(data) {
+        if(data.meta) {
+          var meta = data.meta;
+          if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'createMessage') {
+            Ti.API.log(data.response.messages);
+        
+          }
+        }
+      }	
+  	});
   });
   
 };
