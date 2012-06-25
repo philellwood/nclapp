@@ -1,4 +1,4 @@
-Ti.include(data.js);
+Ti.include('data.js');
 var Cloud = require('ti.cloud');
 Cloud.debug = true;
 

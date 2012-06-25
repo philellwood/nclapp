@@ -21,7 +21,7 @@
 			</intent-filter>
 		</activity>
 
-		<!-- TI_ACTIVITIES -->
+		
 
 		<activity android:name="org.appcelerator.titanium.TiActivity"
 			android:configChanges="keyboardHidden|orientation" />
@@ -37,10 +37,14 @@
 
 		<service android:name="org.appcelerator.titanium.analytics.TiAnalyticsService"
 			android:exported="false" />
-		<!-- TI_SERVICES -->
+		
 
 	</application>
 
-	<!-- TI_PERMISSIONS -->
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.INTERNET"/>
+	
 
 </manifest>

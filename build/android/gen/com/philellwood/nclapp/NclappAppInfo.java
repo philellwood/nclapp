@@ -17,8 +17,29 @@ public final class NclappAppInfo implements ITiAppInfo
 		TiProperties properties = app.getSystemProperties();
 		TiProperties appProperties = app.getAppProperties();
 					
+					properties.setString("acs-api-key-production", "dHYd1hODmELz40VmQ4amK0Mz0BeJENsr");
+					appProperties.setString("acs-api-key-production", "dHYd1hODmELz40VmQ4amK0Mz0BeJENsr");
+					
+					properties.setString("acs-api-key-development", "1PlafvOb0KsfJhWw68tWkGiVt3IkhjxR");
+					appProperties.setString("acs-api-key-development", "1PlafvOb0KsfJhWw68tWkGiVt3IkhjxR");
+					
+					properties.setString("acs-oauth-secret-development", "GxvXXCNnjESPojJkCXvGBGdjOJD5kc8k");
+					appProperties.setString("acs-oauth-secret-development", "GxvXXCNnjESPojJkCXvGBGdjOJD5kc8k");
+					
+					properties.setString("ti.deploytype", "test");
+					appProperties.setString("ti.deploytype", "test");
+					
 					properties.setString("ti.ui.defaultunit", "system");
 					appProperties.setString("ti.ui.defaultunit", "system");
+					
+					properties.setString("acs-oauth-secret-production", "WEjJCzHwUcHrTJ46NZ5dUl30xpabNRSg");
+					appProperties.setString("acs-oauth-secret-production", "WEjJCzHwUcHrTJ46NZ5dUl30xpabNRSg");
+					
+					properties.setString("acs-oauth-key-development", "1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld");
+					appProperties.setString("acs-oauth-key-development", "1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld");
+					
+					properties.setString("acs-oauth-key-production", "5nvh7Lb6IkNnmD3hSIhbodFOecqAZJoP");
+					appProperties.setString("acs-oauth-key-production", "5nvh7Lb6IkNnmD3hSIhbodFOecqAZJoP");
 	}
 	
 	public String getId() {
@@ -34,15 +55,15 @@ public final class NclappAppInfo implements ITiAppInfo
 	}
 	
 	public String getPublisher() {
-		return "not specified";
+		return "phil";
 	}
 	
 	public String getUrl() {
-		return "not specified";
+		return "http://philellwood.com";
 	}
 	
 	public String getCopyright() {
-		return "not specified";
+		return "2012 by phil";
 	}
 	
 	public String getDescription() {
@@ -58,7 +79,7 @@ public final class NclappAppInfo implements ITiAppInfo
 	}
 	
 	public String getGUID() {
-		return "None";
+		return "8a019fe1-e090-472c-a955-546746fffbb1";
 	}
 	
 	public boolean isFullscreen() {
