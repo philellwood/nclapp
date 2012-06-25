@@ -25,11 +25,22 @@ Events.create = function(_data){
 };
 
 Events.queryClub = function(_club){
-  var whereString = JSON.stringify({club : _club});
+  var whereString = JSON.stringify({_club: _club});
   var data = {
     where: whereString
   };
   sdk.sendRequest('events/query.json', 'GET', data, callback);	
+  
+  function callback(data) {
+    if(data) {
+      if(data.meta) {
+        var meta = data.meta;
+        if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryEvents') {
+          var events = data.response.events;
+        }
+      }
+    }
+  }
 };
 
 Events.deleteEvent = function(_id){
