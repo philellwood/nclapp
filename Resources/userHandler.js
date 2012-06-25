@@ -68,14 +68,12 @@ Users.update = function(_data){
 	
 };
 
-Users.getUsersFromClub = function(_club){
+Users.getUsersFromClub = function(_club, _callback){
   var sdk = new Cocoafish('1PlafvOb0KsfJhWw68tWkGiVt3IkhjxR');  // app key
   var data = {
     where: '{'+_club+' : '+_club+'}'
   };
-  sdk.sendRequest('users/query.json', 'GET', data, callback);
-  var users = [];
-  function callback(data) {
+  sdk.sendRequest('users/query.json', 'GET', data, function(){
     if(data) {
       if(data.meta) {
         var meta = data.meta;
@@ -83,11 +81,9 @@ Users.getUsersFromClub = function(_club){
         
           Ti.API.log(data.response.users);
           users = Data.response.users;
-          
+          _callback(users);
         }
       }
-    }
-  }
-  return users;
-	
+    }  	
+  });
 };
