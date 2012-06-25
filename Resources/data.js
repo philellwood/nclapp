@@ -19,7 +19,7 @@ Data.downloadClubs = function(){
 Data.updateCloudClubs = function(){
 	
 	Users.update({
-		custom_fields: '{"clubs":'+JSON.stringify(Data.getUserClubs())+'}'
+		custom_fields: JSON.stringify(Data.getUserClubs())
 	});
 };
 

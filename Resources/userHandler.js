@@ -67,3 +67,23 @@ Users.update = function(_data){
   });
 	
 };
+
+Users.getUsersFromClub = function(_club, _callback){
+  var sdk = new Cocoafish('1PlafvOb0KsfJhWw68tWkGiVt3IkhjxR');  // app key
+  var data = {
+    where: '{'+_club+' : '+_club+'}'
+  };
+  sdk.sendRequest('users/query.json', 'GET', data, function(){
+    if(data) {
+      if(data.meta) {
+        var meta = data.meta;
+        if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryUsers') {
+        
+          Ti.API.log(data.response.users);
+          users = Data.response.users;
+          _callback(users);
+        }
+      }
+    }  	
+  });
+};
