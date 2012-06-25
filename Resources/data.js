@@ -44,3 +44,45 @@ Data.unsubscribeToClub = function(clubName){
 Data.removeAllClubs = function(){
 	Ti.App.Properties.removeProperty(Data.CLUBS);
 };
+
+
+// Data Utility Functions
+
+//  Save property
+Data.save = function (id, data) {
+  Ti.App.Properties.setString(id, JSON.stringify(data));
+};
+//  Property exists?
+Data.exists = function (id) {
+  return Ti.App.Properties.hasProperty(id);
+};
+//  Load property
+Data.load = function (id) {
+  if (Data.exists(id)) {
+    return JSON.parse(Ti.App.Properties.getString(id));
+  }
+  throw new Error("No data under id: " + id);
+};
+
+//  Get a file
+Data.getFile = function (filename) {
+  return Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, filename);
+};
+//  Load a json file
+Data.loadJSON = function (filename) {
+  return JSON.parse(Data.loadRaw(filename));
+};
+//  Save a json file
+Data.saveJSON = function (filename, data) {
+  Data.saveRaw(filename, JSON.stringify(data));
+};
+//  Load a raw file
+Data.loadRaw = function (filename) {
+  var file = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, filename);
+  return file.read().text;
+};
+//  Save a raw file
+Data.saveRaw = function (filename, data) {
+  var file = Data.getFile(filename);
+  file.write(data);
+};
