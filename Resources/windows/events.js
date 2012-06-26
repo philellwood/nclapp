@@ -8,7 +8,8 @@ Ti.include('/eventHandler.js');
   
   table = Ti.UI.createTableView();
   table.addEventListener('click', function (event) {
-    var eventData = allEvents[0];
+    if (!(event.index in allEvents)) return;
+    var eventData = allEvents[event.index];
     var viewEvent = Ti.UI.createWindow({
       url: '/windows/view_event.js',
       opacity: 0
@@ -17,10 +18,6 @@ Ti.include('/eventHandler.js');
       viewEvent.fireEvent('data', {
         data: eventData
       });
-      viewEvent.animate(Ti.UI.createAnimation({
-        opacity: 1,
-        duration : 200
-      }));
     });
     viewEvent.open();
   });
