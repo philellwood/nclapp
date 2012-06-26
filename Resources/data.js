@@ -16,10 +16,17 @@ if (!Data) {
     Data.updateCloudClubs(clubs);
   };
 
-  Data.downloadClubs = function(){
-    var custom_fields = JSON.parse(Users.showCurrent.custom_fields);
-    Ti.API.debug(custom_fields);
-    return custom_fields.clubs;
+  Data.downloadClubs = function(_callback) {
+    Users.showCurrent(function (user) {
+      var customFields = JSON.parse(user.custom_fields);
+      _callback && _callback(customFields.clubs);
+    });
+  };
+  Data.getCloudClubs = function (_callback) {
+    Data.downloadClubs(function (clubs) {
+      Data.setUserClubs(clubs);
+      _callback && _callback();
+    });
   };
   Data.updateCloudClubs = function(){
   	Users.update({
