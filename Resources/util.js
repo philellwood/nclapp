@@ -64,6 +64,9 @@ Util.isObject = function (data) {
 Util.isArray = function (data) {
   return Util.typeIs(data, 'Array');
 };
+Util.isEmptyObject = function (obj) {
+  return (Util.keys(obj).length === 0);
+};
 
 Util.arrayOf = function (data) {
   if (data === undefined) return [];
