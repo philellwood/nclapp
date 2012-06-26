@@ -3,30 +3,22 @@ var Data = {};
 Data.CLUBS = 'clubs';
 
 Data.getUserClubs = function () {
-	if (!Ti.App.Properties.hasProperty(Data.CLUBS)){
-  	  Data.setUserClubs({});
-	}
-	return JSON.parse(Ti.App.Properties.getString(Data.CLUBS));
+  return Data.load(Data.CLUBS, {});
+};
+Data.setUserClubs = function (clubs) {
+  Data.save(Data.CLUBS, clubs);
+  Data.updateCloudClubs(clubs);
 };
 
 Data.downloadClubs = function(){
   var custom_fields = JSON.parse(Users.showCurrent.custom_fields);
   Ti.API.debug(custom_fields);
   return custom_fields.clubs;
-  
 };
-
 Data.updateCloudClubs = function(){
-	
 	Users.update({
 		custom_fields: JSON.stringify(Data.getUserClubs())
 	});
-};
-
-
-Data.setUserClubs = function (clubs) {
-  Ti.App.Properties.setString(Data.CLUBS, JSON.stringify(clubs));
-  Data.updateCloudClubs();
 };
 
 Data.subscribeToClub = function(clubName) {
@@ -34,7 +26,6 @@ Data.subscribeToClub = function(clubName) {
   clubs[clubName] = clubName;
   Data.setUserClubs(clubs);
 };
-
 Data.unsubscribeToClub = function(clubName){
   var clubs = Data.getUserClubs();
   delete clubs[clubName];
@@ -43,6 +34,7 @@ Data.unsubscribeToClub = function(clubName){
 
 Data.removeAllClubs = function(){
 	Ti.App.Properties.removeProperty(Data.CLUBS);
+	Data.updateCloudClubs({})
 };
 
 
@@ -57,11 +49,15 @@ Data.exists = function (id) {
   return Ti.App.Properties.hasProperty(id);
 };
 //  Load property
-Data.load = function (id) {
+Data.load = function (id, def) {
   if (Data.exists(id)) {
     return JSON.parse(Ti.App.Properties.getString(id));
+  } else if (def !== undefined) {
+    Data.save(id, def);
+    return def;
+  } else {
+    throw new Error("No data under id: " + id);
   }
-  throw new Error("No data under id: " + id);
 };
 
 //  Get a file

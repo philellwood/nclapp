@@ -133,6 +133,20 @@ Util.keys = function (obj) {
   return keys;
 };
 
+Util.createSet = function (seq) {
+  var set = {};
+  if (Util.isArray(seq)) {
+    Util.foreach(seq, function (_, key) {
+      set[key] = key;
+    });
+  } else if (Util.isObject(seq)) {
+    Util.forin(seq, function (key) {
+      set[key] = key;
+    });
+  } else {
+    throw new Error("Couldn't create set from non-array or non-object.");
+  }
+};
 
 Util.dataStored = function (id) {
   return Ti.App.Properties.hasProperty(id);
