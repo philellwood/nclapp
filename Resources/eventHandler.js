@@ -22,8 +22,8 @@ Events.create = function(_data){
   
 };
 
-Events.queryClub = function(_club,_callback){
-  var whereString = JSON.stringify(Util.createSet([_club]));
+Events.queryClub = function(_clubs,_callback){
+  var whereString = JSON.stringify(Util.createSet(_clubs));
   var query = {
     where: whereString
   };
