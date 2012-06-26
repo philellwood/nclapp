@@ -39,10 +39,14 @@ var loginButton = Ti.UI.createButton({
 });
 
 loginButton.addEventListener('click',function(e){
+	Data.save("login", username.getValue());
+	Data.save("password", password.getValue());
 	Users.login({
-		login: username.getValue(),
-		password: password.getValue(),
+		login: Data.load("login"),
+		password: Data.load("password")
 		
+	}, function(){
+		alert("successfully logged in");
 	});
 	
 });

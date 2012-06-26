@@ -5,7 +5,7 @@ var Events = {};
  *  <property name="acs-oauth-key-development" type="string">1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld</property>
  *  <property name="acs-api-key-development" type="string">1PlafvOb0KsfJhWw68tWkGiVt3IkhjxR</property>
  */
-var sdk = new Cocoafish('1PlafvOb0KsfJhWw68tWkGiVt3IkhjxR');
+var sdk = new Cocoafish('1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld','GxvXXCNnjESPojJkCXvGBGdjOJD5kc8k');
 Events.create = function(_data){
     
   _data.custom_fields = '{'+_data.club+' : '+_data.club+'}';

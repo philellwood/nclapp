@@ -4,7 +4,7 @@ var Cloud = require('ti.cloud');
 Cloud.debug = true;
 var Messages = {};
 
-var sdk = new Cocoafish('1PlafvOb0KsfJhWw68tWkGiVt3IkhjxR');
+var sdk = new Cocoafish('1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld','GxvXXCNnjESPojJkCXvGBGdjOJD5kc8k');
 
 Messages.showInbox = function(_callback){
 	sdk.sendRequest('messages/show/inbox.json', 'GET', null, function(){
@@ -27,7 +27,7 @@ Messages.showInbox = function(_callback){
 
 Messages.create = function(_data,_callback){
   Ti.API.log(_data);
-  var sdk = new Cocoafish('1PlafvOb0KsfJhWw68tWkGiVt3IkhjxR');  // app key
+  var sdk = new Cocoafish('1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld','GxvXXCNnjESPojJkCXvGBGdjOJD5kc8k');  // app key
   
   Users.getUsersFromClub(_data.club, function(users){
 
@@ -44,18 +44,23 @@ Messages.create = function(_data,_callback){
   	  body : _data.body,
   	  to_ids: userIds
   	}; 
-  	sdk.sendRequest('messages/create.json', 'POST', postData, function(data){
-  	  if(data) {
-  	  	Ti.API.log(data);
-        if(data.meta) {
-          var meta = data.meta;
-          if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'createMessage') {
-            Ti.API.log(data.response.messages);
-            _callback && _callback();
+  	Users.login({
+		login: Data.load("login"),
+		password: Data.load("password")
+  	}, function(){
+  	  sdk.sendRequest('messages/create.json', 'POST', postData, function(data){
+  	    if(data) {
+  	  	  Ti.API.log(data);
+          if(data.meta) {
+            var meta = data.meta;
+            if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'createMessage') {
+              Ti.API.log(data.response.messages);
+              _callback && _callback();
         
+            }
           }
-        }
-      }	
+        }	
+  	  }); 		
   	});
   });
   

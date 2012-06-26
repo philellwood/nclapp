@@ -23,7 +23,7 @@ Users.create = function(_data){
 };
 
 Users.login = function(_data, _callback){
-	Cloud.Users.login({
+	/*Cloud.Users.login({
       login: _data.login,
       password: _data.password
     }, function (e) {
@@ -37,7 +37,23 @@ Users.login = function(_data, _callback){
         Ti.API.error('Error:\\n' +
             ((e.error && e.message) || JSON.stringify(e)));
       }
-    });
+    });*/
+  var sdk = new Cocoafish('1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld','GxvXXCNnjESPojJkCXvGBGdjOJD5kc8k');  // app key
+  var postData = {
+    login: _data.login, 
+    password: _data.password
+  };
+  sdk.sendRequest('users/login.json', 'POST', postData, function(data){
+    if(data) {
+      Ti.API.info(data);
+      if(data.meta) {
+        var meta = data.meta;
+        if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'loginUser') {
+         _callback && _callback();
+        }
+      }
+    }
+  });
 	
 };
 
@@ -70,7 +86,7 @@ Users.update = function(_data){
 };
 
 Users.getUsersFromClub = function(_club, _callback){
-  var sdk = new Cocoafish('1PlafvOb0KsfJhWw68tWkGiVt3IkhjxR');  // app key
+  var sdk = new Cocoafish('1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld','GxvXXCNnjESPojJkCXvGBGdjOJD5kc8k');  // app key
   var query = {
     where: Util.createSet([_club])
   };

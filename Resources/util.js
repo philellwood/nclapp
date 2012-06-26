@@ -1,3 +1,4 @@
+
 var Util = {};
 
 Util.createSimpleDataTable = function (input, properties) {
