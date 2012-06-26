@@ -1,6 +1,5 @@
 var Users, Data;
 
-
 if (!Users) {
   Users = {};
   
@@ -43,6 +42,7 @@ if (!Users) {
         }
       }
     });
+
   };
 
   Users.showCurrent = function(_callback){
@@ -73,6 +73,7 @@ if (!Users) {
               ((e.error && e.message) || JSON.stringify(e)));
       }
     });
+
 	
   };
 
