@@ -1,25 +1,46 @@
 Ti.include('/util.js');
 Ti.include('/data.js');
-Ti.include('/windows/events.clubs.js');
-Ti.include('/windows/events.mine.js');
 
 (function (window) {
-  var createEvent, clubsView, mineView, switchBar;
+  var createEvent, settings, requery, table;
+  
+  table = Ti.UI.createTableView();
+  window.add(table);
+  
+  requery = function () {
+    Ti.API.info("REQUERYING!");
+    table.data = [
+      Ti.UI.createTableViewRow({title:'Event 1'}),
+      Ti.UI.createTableViewRow({title:'Event 2'}),
+      Ti.UI.createTableViewRow({title:'Event 3'})
+    ];
+  };
+  
+  requery();
 
-  createEvent = (window.rightNavButton = Ti.UI.createButton({
-    title: "New Event",
-    style: Ti.UI.iPhone.SystemButtonStyle.DONE,
-    enabled: false
-  }));
+  createEvent = Ti.UI.createButton({
+    title: "New Event"
+  });
   createEvent.addEventListener('click', function () {
     Ti.UI.createWindow({
       url: '/windows/new_event.js',
       modal: true
     }).open();
   });
-  
   window.addEventListener('focus', function () {
-    createEvent.enabled = !Util.isEmptyObject(Data.getUserClubs());
+    window.rightNavButton = Util.isEmptyObject(Data.getUserClubs()) ? undefined : createEvent;
+  });
+  
+  settings = (window.leftNavButton = Ti.UI.createButton({
+    title: "Options",
+    style: Ti.UI.iPhone.SystemButtonStyle.BORDERED
+  }));
+  settings.addEventListener('click', function () {
+    Ti.UI.createWindow({
+      url: '/windows/event_options.js',
+      modal: true,
+      onchange: requery
+    }).open();
   });
 
   // clubsView = createEventsClubs();

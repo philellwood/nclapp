@@ -4,8 +4,8 @@ Ti.include('/clubs_data.js');
 (function (window) {
   var table, SELECTED, UNSELECTED, selectedClubs, deleteButton;
 
-  SELECTED = { backgroundColor: '#0f0', isSelected: true };
-  UNSELECTED = { backgroundColor: '#fff', isSelected: false };
+  SELECTED = { backgroundColor: '#456', color: '#fff', isSelected: true };
+  UNSELECTED = { backgroundColor: '#fff', color: '#000', isSelected: false };
   selectedClubs = Data.getUserClubs();
 
   table = Util.createSimpleDataTable(clubsData, {
