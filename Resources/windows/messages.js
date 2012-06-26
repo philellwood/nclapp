@@ -25,7 +25,7 @@ Ti.include('/messageHandler.js');
   	Messages.showInbox(function(messages){
   		var subjectArray = [];
   		for(var i =0;i<messages.length;i++){
-  			subjectArray.push(messages[i].body);
+  			subjectArray.push(messages[i].subject);
   		}
   		Ti.API.info(messages);
   		table = Util.createSimpleDataTable(subjectArray, {'row':{height:40}});

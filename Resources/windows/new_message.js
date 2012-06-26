@@ -3,12 +3,12 @@ Ti.include('/data.js');
 Ti.include('/clubs_data.js');
 Ti.include('/messageHandler.js');
 (function (window) {
-  var cancel, send, message, clubPicker;
+  var cancel, send, subject, message, clubPicker;
   
   window.updateLayout({
     title: "New Message",
     backgroundColor: '#fff',
-    barColor: '#000'
+    barColour: '#000'
   });
   
   cancel = (window.leftNavButton = Ti.UI.createButton({ title: "Cancel" }));
@@ -19,6 +19,7 @@ Ti.include('/messageHandler.js');
   send = (window.rightNavButton = Ti.UI.createButton({ title: "Send" }));
   send.addEventListener('click', function () {
     Messages.create({
+    	subject : subject.getValue(),
     	body : message.getValue(),
     	club : clubPicker.getSelectedRow(0).getTitle()
     	
@@ -29,9 +30,15 @@ Ti.include('/messageHandler.js');
 
   });
   
+  subject = Ti.UI.createTextField({
+  	top:5, height: 30, width:310,
+  	borderWidth: 1, borderColor: '#bbb', borderRadius: 3
+  });
+  window.add(subject);
+  
   message = Ti.UI.createTextArea({
     hintText: 'Enter message here.',
-    top: 5, bottom: 222,
+    top: 40, bottom: 222,
     left: 5, right: 5,
     borderWidth: 1, borderColor: '#bbb', borderRadius: 3
   });
