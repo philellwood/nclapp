@@ -3,7 +3,7 @@ Ti.include('/data.js');
 Ti.include('/clubs_data.js');
 Ti.include('/messageHandler.js');
 (function (window) {
-  var cancel, create, message, clubPicker;
+  var cancel, create, nameLabel, name, datePicker, clubPicker;
   
   window.updateLayout({
     title: "New Event",
@@ -21,5 +21,36 @@ Ti.include('/messageHandler.js');
     Ti.API.log("TODO");
     window.close();
   });
+  
+  nameLabel = Ti.UI.createLabel({
+  	top:10, left:5, text:'Event Name:'
+  });
+  window.add(nameLabel);
+  name = Ti.UI.createTextField({
+  	top:10, left:120, height: 30, width:150,
+  	borderWidth: 1, borderColor: '#bbb', borderRadius: 3
+  });
+  window.add(name);
+  
+  datePicker = Ti.UI.createPicker({
+  	type:Titanium.UI.PICKER_TYPE_DATE_AND_TIME,
+  	minDate: new Date(),
+  	value: new Date(),
+  });
+  
+  window.add(datePicker);
+  
+  clubPicker = Ti.UI.createPicker({ bottom: 0 });
+  window.add(clubPicker);
+  clubPicker.add((function () {
+    var userclubs = Data.getUserClubs(), result = [];
+    Util.foreach(clubsData, function (_, title) {
+      if (title in userclubs) {
+        result.push(Ti.UI.createPickerRow({ title: title }));
+      }
+    });
+    return result;
+  })());
+  clubPicker.selectionIndicator = true;
   
 }).call(Ti.UI.currentWindow, Ti.UI.currentWindow);

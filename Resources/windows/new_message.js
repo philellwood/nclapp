@@ -7,7 +7,8 @@ Ti.include('/messageHandler.js');
   
   window.updateLayout({
     title: "New Message",
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    barColor: '#000'
   });
   
   cancel = (window.leftNavButton = Ti.UI.createButton({ title: "Cancel" }));
