@@ -57,8 +57,8 @@ Users.login = function(_data, _callback){
 	
 };
 
-Users.showCurrent = function(){
-	Cloud.Users.showMe(function (e) {
+Users.showCurrent = function(_callback){
+	/*Cloud.Users.showMe(function (e) {
       if (e.success) {
         var user = e.users[0];
         Ti.API.log(user);
@@ -68,6 +68,21 @@ Users.showCurrent = function(){
             ((e.error && e.message) || JSON.stringify(e)));
       }
     });
+    */
+   var sdk = new Cocoafish('1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld','GxvXXCNnjESPojJkCXvGBGdjOJD5kc8k');  // app key
+   sdk.sendRequest('users/show/me.json', 'GET', null, function(){
+    if(data) {
+      Ti.API.info(data);
+      if(data.meta) {
+        var meta = data.meta;
+        if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'loginUser') {
+         var user = data.response.users[0];
+         _callback(user);
+        }
+      }
+    }
+  });
+	
 };
 
 Users.update = function(_data){
