@@ -43,18 +43,25 @@ Ti.include('/messageHandler.js');
   });
   window.add(date);
   
-  date.addEventListener('focus',function(){
-  	infoWin.open();
-  })
+  date.addEventListener('focus',function(event){
+    var viewEvent = Ti.UI.createWindow({
+      url: '/windows/pickerWindow.js',
+      opacity: 0
+    });
+    viewEvent.addEventListener('open', function () {
+      viewEvent.fireEvent('data', {
+        type:Titanium.UI.PICKER_TYPE_DATE_AND_TIME,
+        minDate: new Date(),
+        value: new Date()
+      });
+      viewEvent.animate(Ti.UI.createAnimation({
+        opacity: 1,
+        duration : 200
+      }));
+    });
+    viewEvent.open();
+  }); 	
   
-  infoWin = Ti.UI.createWindow({modal:true});
-  datePicker = Ti.UI.createPicker({
-  	type:Titanium.UI.PICKER_TYPE_DATE_AND_TIME,
-  	minDate: new Date(),
-  	value: new Date(),
-  });
-  
-  infoWin.add(datePicker);
   
   clubPicker = Ti.UI.createPicker({ bottom: 0 });
   window.add(clubPicker);
