@@ -2,13 +2,34 @@ Ti.include('/util.js');
 Ti.include('/data.js');
 
 (function (window) {
-  var createEvent, settings, requery, table;
+  var createEvent, settings, requery, table, options, ID;
+  
+  ID = "EVENT_OPTIONS";
   
   table = Ti.UI.createTableView();
   window.add(table);
   
   requery = function () {
     Ti.API.info("REQUERYING!");
+    options = Data.load(ID, {});
+    // table.data = [];
+    
+    /*
+    
+    activityIndicator.on();
+    
+    CLOUD.QUERY(options, function onsuccess(events) {
+      table.data = Util.foreach(events, function (event) {
+        return Ti.UI.createTableViewRow({ title: event.title });
+      });
+      activityIndicator.off();
+    }, function onerror() {
+      alert("There was a problem loading the events.");
+      activityIndicator.off();
+    });
+    
+    */
+    
     table.data = [
       Ti.UI.createTableViewRow({title:'Event 1'}),
       Ti.UI.createTableViewRow({title:'Event 2'}),
