@@ -1,6 +1,10 @@
+Ti.include('/data.js');
 Ti.include('/util.js');
 
 var showMain = function () {
+  
+  Data.getCloudClubs();
+  
   Util.buildTabGroup([
 
     { 'title': "Messages",
