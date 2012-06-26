@@ -2,7 +2,7 @@ Ti.include('/util.js');
 Ti.include('/data.js');
 Ti.include('/messageHandler.js');
 (function (window) {
-  var newMsgButton, debugButton;
+  var newMsgButton, refreshBtn, table, refresh, allMessages;
 
   window.barColor = '#123';
 
@@ -14,24 +14,43 @@ Ti.include('/messageHandler.js');
   });
   window.addEventListener('focus', function () {
     window.rightNavButton = Util.isEmptyObject(Data.getUserClubs()) ? undefined : newMsgButton;
+    refresh();
   });
-
-  //table = Util.createSimpleDataTable()
-  debugButton = Ti.UI.createButton({
-  	title: 'get inbox',
-  	top: 20
+  
+  table = Ti.UI.createTableView();
+  window.add(table);
+  table.addEventListener('click', function (event) {
+    if (!(allMessages[event.index])) return;
+    var msgData = allMessages[event.index];
+    var viewMsg = Ti.UI.createWindow({
+      url: '/windows/view_message.js',
+      opacity: 0
+    });
+    viewMsg.addEventListener('open', function () {
+      viewMsg.fireEvent('data', {
+        data: msgData
+      });
+    });
+    viewMsg.open();
   });
-  debugButton.addEventListener('click', function(){
-  	Messages.showInbox(function(messages){
-  		var subjectArray = [];
-  		for(var i =0;i<messages.length;i++){
-  			subjectArray.push(messages[i].subject);
-  		}
-  		Ti.API.info(messages);
-  		table = Util.createSimpleDataTable(subjectArray, {'row':{height:40}});
-  		window.add(table);
-  	}) 	
+  
+  refresh = function () {
+    Messages.showInbox(function (messages) {
+      allMessages = messages;
+      table.data = Util.foreach(messages, function (_, item) {
+        return Ti.UI.createTableViewRow({
+          title: item.subject,
+          height: 40
+        });
+      });
+    });
+  };
+  
+  refreshBtn = (window.leftNavButton = Ti.UI.createButton({
+    title: 'Refresh'
+  }));
+  refreshBtn.addEventListener('click', function () {
+    refresh(); 	
   });
-  window.add(debugButton);
 
 }).call(Ti.UI.currentWindow, Ti.UI.currentWindow);
