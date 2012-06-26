@@ -1,10 +1,27 @@
 Ti.include('/util.js');
 (function (window) {
-  var backdrop, view, scrollingDescription, description;
+  var backdrop, view, scrollingDescription, description, closeWindow;
   window.updateLayout({
     backgroundColor: 'transparent',
     title: 'View Event'
   });
+  window.addEventListener('open', function () {
+    window.animate(Ti.UI.createAnimation({
+      opacity: 1,
+      duration: 200,
+    }));
+  });
+  closeWindow = function () {
+    var animation = Ti.UI.createAnimation({
+      opacity: 0,
+      duration: 200,
+    });
+    animation.addEventListener('complete', function () {
+      window.close();
+    });
+    window.animate(animation);
+  };
+  
   window.add(backdrop = Ti.UI.createView({
     backgroundColor: '#def',
     opacity: 0.8,
@@ -40,7 +57,7 @@ Ti.include('/util.js');
       title: 'Close', top: 10
     }));
     close.addEventListener('click', function () {
-      window.close();
+      closeWindow();
     });
   });
 }).call(Ti.UI.currentWindow, Ti.UI.currentWindow);
