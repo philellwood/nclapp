@@ -1,5 +1,7 @@
 Ti.include('cocoafish.js');
 Ti.include('userHandler.js');
+var Cloud = require('ti.cloud');
+Cloud.debug = true;
 var Messages = {};
 
 var sdk = new Cocoafish('1PlafvOb0KsfJhWw68tWkGiVt3IkhjxR');
@@ -24,16 +26,20 @@ Messages.showInbox = function(_callback){
 
 
 Messages.create = function(_data,_callback){
+  Ti.API.log(_data);
   var sdk = new Cocoafish('1PlafvOb0KsfJhWw68tWkGiVt3IkhjxR');  // app key
+  
   Users.getUsersFromClub(_data.club, function(users){
-  	Ti.API.debug(_data);
-  	var userIds = function(users){
-  		var returnString= '';
-  		for(var i=0, iMax=users.length;i<iMax;i++){
-  			returnString+=users[i].id;
-  		}
-  		return returnString;
-  	};
+
+	var userIds = Util.foreach(users, function (_, user) {
+		return user.id;
+	}).join(',');
+
+
+  	Ti.API.log(userIds);
+  	if (Cloud.hasStoredSession()){
+  		Ti.API.info(Cloud.retrieveStoredSession());
+  	}
   	var postData = {
   	  body : _data.body,
   	  to_ids: userIds

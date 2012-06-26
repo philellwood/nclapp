@@ -22,7 +22,7 @@ Users.create = function(_data){
 });
 };
 
-Users.login = function(_data){
+Users.login = function(_data, _callback){
 	Cloud.Users.login({
       login: _data.login,
       password: _data.password
@@ -31,8 +31,8 @@ Users.login = function(_data){
         var user = e.users[0];
         Ti.API.log('Success:\\n' +
             'id: ' + user.id + '\\n' +
-            'first name: ' + user.first_name + '\\n' +
-            'last name: ' + user.last_name);
+            'session_id: ' + e.meta.session_id);
+        _callback && _callback();
       } else {
         Ti.API.error('Error:\\n' +
             ((e.error && e.message) || JSON.stringify(e)));
@@ -75,14 +75,15 @@ Users.getUsersFromClub = function(_club, _callback){
     where: Util.createSet([_club])
   };
   sdk.sendRequest('users/query.json', 'GET', query, function(data){
+  	
     if(data) {
-      Ti.API.log(data);
       if(data.meta) {
         var meta = data.meta;
         if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryUsers') {
-        
-          Ti.API.log(data.response.users);
-          users = Data.response.users;
+          
+          var users = data.response.users;
+          Ti.API.log('get users from club query success ',users);
+          
           _callback(users);
         }
       }
