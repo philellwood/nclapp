@@ -1,6 +1,6 @@
 Ti.include('/util.js');
 Ti.include('/data.js');
-
+Ti.include('/eventHandler.js');
 (function (window) {
   var createEvent, settings, requery, table, options, ID;
   
@@ -11,6 +11,7 @@ Ti.include('/data.js');
   
   requery = function () {
     Ti.API.info("REQUERYING!");
+
     options = Data.load(ID, {});
     // table.data = [];
     
@@ -30,11 +31,11 @@ Ti.include('/data.js');
     
     */
     
-    table.data = [
-      Ti.UI.createTableViewRow({title:'Event 1'}),
-      Ti.UI.createTableViewRow({title:'Event 2'}),
-      Ti.UI.createTableViewRow({title:'Event 3'})
-    ];
+    Events.queryClub(Util.keys(Data.getUserClubs()), function(events){
+    	for(var i =0;i<events.length;i++){
+    	  table.appendRow(Ti.UI.createTableViewRow({title:events[i].name}));
+    	}
+    });
   };
   
   requery();
