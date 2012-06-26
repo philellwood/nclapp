@@ -12,29 +12,12 @@ Ti.include('/eventHandler.js');
   requery = function () {
     Ti.API.info("REQUERYING!");
 
-    options = Data.load(ID, {});
-    // table.data = [];
+    options = Data.load(ID, Util.createSet(Data.getUserClubs()));
     
-    /*
-    
-    activityIndicator.on();
-    
-    CLOUD.QUERY(options, function onsuccess(events) {
-      table.data = Util.foreach(events, function (event) {
-        return Ti.UI.createTableViewRow({ title: event.title });
-      });
-      activityIndicator.off();
-    }, function onerror() {
-      alert("There was a problem loading the events.");
-      activityIndicator.off();
-    });
-    
-    */
-    
-    Events.queryClub(Util.keys(Data.getUserClubs()), function(events){
-    	for(var i =0;i<events.length;i++){
-    	  table.appendRow(Ti.UI.createTableViewRow({title:events[i].name}));
-    	}
+    Events.queryClub(options, function(events){
+    	table.data = Util.foreach(events, function (index, event) {
+    		return Ti.UI.createTableViewRow({ title: event.name });
+    	});
     });
   };
   
