@@ -8,10 +8,13 @@ Ti.include('/clubs_data.js');
   UNSELECTED = { backgroundColor: '#fff', color: '#000', isSelected: false };
   selectedClubs = Data.getUserClubs();
 
+  window.titleControl = (Ti.UI.createSearchBar({
+      barColor: '#123', 
+      height: 44
+  }));
+
   table = Util.createSimpleDataTable(clubsData, {
-    'table': {
-      //style: Ti.UI.iPhone.TableViewStyle.GROUPED
-    },
+    'table': { },
     'row': {
     	height: 40,
       process: function (club, object) {
@@ -39,11 +42,7 @@ Ti.include('/clubs_data.js');
 
   
   deleteButton = (window.rightNavButton = Ti.UI.createButton({
-     title: 'Unsubscribe from all Clubs',
-     top: 30,
-     width: 300,
-     height: 50,
-     systemButton: Ti.UI.iPhone.SystemButton.TRASH
+     title: 'Delete All'
   }));
   deleteButton.addEventListener('click', function (e) {
     var dialog = Ti.UI.createAlertDialog({
@@ -67,8 +66,6 @@ Ti.include('/clubs_data.js');
     });
     dialog.show();
   });
-
-  window.add(deleteButton);
 
   window.add(table);
 }).call(Ti.UI.currentWindow, Ti.UI.currentWindow);
