@@ -7,13 +7,13 @@ var Messages = {};
 var sdk = new Cocoafish('1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld','GxvXXCNnjESPojJkCXvGBGdjOJD5kc8k');
 
 Messages.showInbox = function(_callback){
-	sdk.sendRequest('messages/show/inbox.json', 'GET', null, function(){
+	
+	sdk.sendRequest('messages/show/inbox.json', 'GET', null, function(data){
 	  if(data) {
         if(data.meta) {
           var meta = data.meta;
           if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showMessagesInbox') {
             var messages = data.response.messages;
-            Ti.API.log(messages);
             _callback(messages);
           }
         }
