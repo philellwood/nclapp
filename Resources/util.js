@@ -30,7 +30,8 @@ Util.buildTabGroup = function (data) {
     window = Ti.UI.createWindow({
       'title': datum.title || 'No title',
       'url': datum.url || '',
-      'backgroundColor': '#fff'
+      'backgroundColor': '#fff',
+      'barColor': '#123'
     });
     
     tabs.push(Ti.UI.createTab({
