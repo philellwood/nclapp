@@ -46,6 +46,45 @@ Util.buildTabGroup = function (data) {
   });
 };
 
+Util.createDataView = function (data, props) {
+  var view;
+  view = Ti.UI.createScrollView(Util.merge(props, {
+    layout: 'vertical',
+    contentHeight: 'auto'
+  }));
+  Util.foreach(data, function (_, item) {
+    view.add(Util.createDataViewRow(item));
+  });
+  return view;
+};
+Util.createDataViewRow = function (item) {
+  var view;
+  view = Ti.UI.createView({
+    layout: 'horizonal',
+    height: item.height + 5 || 'auto',
+    left: 0, right: 0
+  });
+  if (!item.type || item.type === 'text') {
+    view.add(Ti.UI.createLabel({
+      text: item.title,
+      width: item.labelWidth || 100,
+      left: 0,
+      top: 5
+    }))
+    view.add(Ti.UI.createTextArea({
+      value: item.value,
+      editable: false,
+      borderWidth: 1,
+      borderColor: '#bbb',
+      borderRadius: 1,
+      top: 5,
+      bottom: 0,
+      left: item.labelWidth || 100,
+      right: 0
+    }));
+  }
+  return view;
+};
 
 Util.empty = function () {};
 Util.identity = function () {};
