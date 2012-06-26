@@ -7,37 +7,23 @@ var Users = {};
 
 Users.create = function(_data){
 	Cloud.Users.create({
-    username: _data.username,
-    password: _data.password,
-    password_confirmation: _data.confirmPassword,
-    //first_name: firstName.value,
-    //last_name: lastName.value,
-    custom_fields: JSON.stringify(Data.getUserClubs()) //arrays cant be queried, so store clubs as string
-}, function (e) {
+      username: _data.username,
+      password: _data.password,
+      password_confirmation: _data.confirmPassword,
+      //first_name: firstName.value,
+      //last_name: lastName.value,
+      custom_fields: JSON.stringify(Data.getUserClubs()) //arrays cant be queried, so store clubs as string
+  }, function (e) {
     if (e.success) {
 		Ti.API.log(e);
     } else {
         Ti.API.error(e);// oops, something went wrong
     }
-});
+  });
 };
 
 Users.login = function(_data, _callback){
-	/*Cloud.Users.login({
-      login: _data.login,
-      password: _data.password
-    }, function (e) {
-      if (e.success) {
-        var user = e.users[0];
-        Ti.API.log('Success:\\n' +
-            'id: ' + user.id + '\\n' +
-            'session_id: ' + e.meta.session_id);
-        _callback && _callback();
-      } else {
-        Ti.API.error('Error:\\n' +
-            ((e.error && e.message) || JSON.stringify(e)));
-      }
-    });*/
+
   var sdk = new Cocoafish('1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld','GxvXXCNnjESPojJkCXvGBGdjOJD5kc8k');  // app key
   var postData = {
     login: _data.login, 
@@ -58,17 +44,7 @@ Users.login = function(_data, _callback){
 };
 
 Users.showCurrent = function(_callback){
-	/*Cloud.Users.showMe(function (e) {
-      if (e.success) {
-        var user = e.users[0];
-        Ti.API.log(user);
-        return user;
-      } else {
-        Ti.API.error('Error:\\n' +
-            ((e.error && e.message) || JSON.stringify(e)));
-      }
-    });
-    */
+
    var sdk = new Cocoafish('1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld','GxvXXCNnjESPojJkCXvGBGdjOJD5kc8k');  // app key
    sdk.sendRequest('users/show/me.json', 'GET', null, function(){
     if(data) {
