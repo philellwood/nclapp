@@ -14,7 +14,7 @@ selectedClubs = Data.getUserClubs();
 
 table = Util.createSimpleDataTable(clubsData, {
   'table': {
-    style: Ti.UI.iPhone.TableViewStyle.GROUPED
+    //style: Ti.UI.iPhone.TableViewStyle.GROUPED
   },
   'row': {
   	
