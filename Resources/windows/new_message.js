@@ -1,6 +1,7 @@
 Ti.include('/util.js');
 Ti.include('/data.js');
 Ti.include('/clubs_data.js');
+Ti.include('/messageHandler.js');
 (function (window) {
   var cancel, send, message, clubPicker;
   
@@ -16,7 +17,11 @@ Ti.include('/clubs_data.js');
   
   send = (window.rightNavButton = Ti.UI.createButton({ title: "Send" }));
   send.addEventListener('click', function () {
-    // Messages.create({subject,body,...});
+    Messages.create({
+    	body : message.getValue(),
+    	club : clubPicker.getSelectedRow().getTitle()
+    	
+    });
     alert("This will send...");
     window.close();
   });
