@@ -1,3 +1,4 @@
+Ti.include('cocoafish.js');
 var Events = {};
 /*
  *  <property name="acs-oauth-secret-development" type="string">GxvXXCNnjESPojJkCXvGBGdjOJD5kc8k</property>

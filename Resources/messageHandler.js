@@ -1,3 +1,4 @@
+Ti.include('cocoafish.js');
 var Messages = {};
 
 var sdk = new Cocoafish('1PlafvOb0KsfJhWw68tWkGiVt3IkhjxR');
@@ -32,7 +33,6 @@ Messages.create = function(_data){
   		return returnString;
   	}
   	var data = {
-  	  subject : _data.subject,
   	  body : _data.body,
   	  to_ids: userIds
   	} 

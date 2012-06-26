@@ -1,4 +1,5 @@
 Ti.include('data.js');
+Ti.include('cocoafish.js');
 var Cloud = require('ti.cloud');
 Cloud.debug = true;
 
