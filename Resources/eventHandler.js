@@ -7,8 +7,8 @@ var Events = {};
  */
 var sdk = new Cocoafish('1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld','GxvXXCNnjESPojJkCXvGBGdjOJD5kc8k');
 Events.create = function(_data){
-    
-  _data.custom_fields = '{'+_data.club+' : '+_data.club+'}';
+  var custom_field = {club:_data.club};
+  _data.custom_fields = JSON.stringify(custom_field);
   sdk.sendRequest('events/create.json', 'POST', _data, function(data){
     if(data) {
       if(data.meta) {

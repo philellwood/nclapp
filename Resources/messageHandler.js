@@ -23,8 +23,6 @@ Messages.showInbox = function(_callback){
 };
 
 
-
-
 Messages.create = function(_data,_callback){
   Ti.API.log(_data);
   var sdk = new Cocoafish('1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld','GxvXXCNnjESPojJkCXvGBGdjOJD5kc8k');  // app key
@@ -34,34 +32,28 @@ Messages.create = function(_data,_callback){
 	var userIds = Util.foreach(users, function (_, user) {
 		return user.id;
 	}).join(',');
-
+	var custom_field = {club:_data.club};
 
   	Ti.API.log(userIds);
-  	if (Cloud.hasStoredSession()){
-  		Ti.API.info(Cloud.retrieveStoredSession());
-  	}
   	var postData = {
   	  body : _data.body,
-  	  to_ids: userIds
+  	  to_ids: userIds,
+  	  custom_data_fields: JSON.stringify(custom_field)
   	}; 
-  	Users.login({
-		login: Data.load("login"),
-		password: Data.load("password")
-  	}, function(){
-  	  sdk.sendRequest('messages/create.json', 'POST', postData, function(data){
-  	    if(data) {
-  	  	  Ti.API.log(data);
-          if(data.meta) {
-            var meta = data.meta;
-            if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'createMessage') {
-              Ti.API.log(data.response.messages);
-              _callback && _callback();
+  	sdk.sendRequest('messages/create.json', 'POST', postData, function(data){
+  	  if(data) {
+  		Ti.API.log(data);
+        if(data.meta) {
+          var meta = data.meta;
+          if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'createMessage') {
+            Ti.API.log(data.response.messages);
+            _callback && _callback();
         
-            }
           }
-        }	
-  	  }); 		
-  	});
+        }
+      }	
+  	}); 		
+  	
   });
   
 };
