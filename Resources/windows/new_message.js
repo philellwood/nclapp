@@ -29,6 +29,7 @@ Ti.include('/messageHandler.js');
   });
   
   message = Ti.UI.createTextArea({
+    hintText: 'Enter message here.',
     top: 5, bottom: 222,
     left: 5, right: 5,
     borderWidth: 1, borderColor: '#bbb', borderRadius: 3
