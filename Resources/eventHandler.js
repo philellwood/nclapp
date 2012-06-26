@@ -5,11 +5,11 @@ var Events = {};
  *  <property name="acs-oauth-key-development" type="string">1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld</property>
  *  <property name="acs-api-key-development" type="string">1PlafvOb0KsfJhWw68tWkGiVt3IkhjxR</property>
  */
-var sdk = new Cocoafish('1PlafvOb0KsfJhWw68tWkGiVt3IkhjxR');
+var sdk = new Cocoafish('1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld','GxvXXCNnjESPojJkCXvGBGdjOJD5kc8k');
 Events.create = function(_data){
     
   _data.custom_fields = '{'+_data.club+' : '+_data.club+'}';
-  sdk.sendRequest('events/create.json', 'POST', _data, function(){
+  sdk.sendRequest('events/create.json', 'POST', _data, function(data){
     if(data) {
       if(data.meta) {
         var meta = data.meta;
@@ -24,10 +24,10 @@ Events.create = function(_data){
 
 Events.queryClub = function(_club,_callback){
   var whereString = JSON.stringify({_club: _club});
-  var data = {
+  var query = {
     where: whereString
   };
-  sdk.sendRequest('events/query.json', 'GET', data, function(){
+  sdk.sendRequest('events/query.json', 'GET', query, function(data){
     if(data) {
       if(data.meta) {
         var meta = data.meta;
@@ -43,8 +43,8 @@ Events.queryClub = function(_club,_callback){
 };
 
 Events.deleteEvent = function(_id){
-  var data = {event_id : _id};
-  sdk.sendRequest('events/delete.json', 'DELETE', data, function(){
+  var postData = {event_id : _id};
+  sdk.sendRequest('events/delete.json', 'DELETE', postData, function(data){
     if(data) {
       if(data.meta) {
         var meta = data.meta;
