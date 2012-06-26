@@ -2,11 +2,28 @@ Ti.include('/util.js');
 Ti.include('/data.js');
 Ti.include('/eventHandler.js');
 (function (window) {
-  var createEvent, settings, requery, table, options, ID;
+  var createEvent, settings, requery, table, options, ID, allEvents;
   
   ID = "EVENT_OPTIONS";
   
   table = Ti.UI.createTableView();
+  table.addEventListener('click', function (event) {
+    var eventData = allEvents[0];
+    var viewEvent = Ti.UI.createWindow({
+      url: '/windows/view_event.js',
+      opacity: 0
+    });
+    viewEvent.addEventListener('open', function () {
+      viewEvent.fireEvent('data', {
+        data: eventData
+      });
+      viewEvent.animate(Ti.UI.createAnimation({
+        opacity: 1,
+        duration : 200
+      }));
+    });
+    viewEvent.open();
+  });
   window.add(table);
   
   requery = function () {
@@ -14,7 +31,8 @@ Ti.include('/eventHandler.js');
 
     options = Data.load(ID, Util.createSet(Data.getUserClubs()));
     
-    Events.queryClub(options, function(events){
+    Events.queryClub(options, function (events) {
+      allEvents = events;
     	table.data = Util.foreach(events, function (index, event) {
     		return Ti.UI.createTableViewRow({ title: event.name });
     	});
