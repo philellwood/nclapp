@@ -1,24 +1,10 @@
 Ti.include('/util.js');
+Ti.include('/data.js');
+Ti.include('/windows/main.js');
 
 Ti.UI.setBackgroundColor('#000');
 
-Util.buildTabGroup([
-
-  { 'title': "Messages",
-    'url': "windows/messages.js",
-    'icon': "KS_nav_views.png" },
-
-  { 'title': "Events",
-    'url': "windows/events.js",
-    'icon': "KS_nav_views.png" },
-
-  { 'title': "Clubs",
-    'url': "windows/clubs.js",
-    'icon': "KS_nav_ui.png" },
-    
-  {
-  	'title':"Users",
-  	'url': "windows/users.js",
-  	'icon': "KS_nav_ui.png"}
-
-]).open();
+Ti.UI.createWindow({
+  url: '/windows/login.js',
+  success: showMain
+}).open();
