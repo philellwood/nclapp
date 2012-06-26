@@ -71,11 +71,12 @@ Users.update = function(_data){
 
 Users.getUsersFromClub = function(_club, _callback){
   var sdk = new Cocoafish('1PlafvOb0KsfJhWw68tWkGiVt3IkhjxR');  // app key
-  var data = {
-    where: '{'+_club+' : '+_club+'}'
+  var query = {
+    where: Util.createSet([_club])
   };
-  sdk.sendRequest('users/query.json', 'GET', data, function(){
+  sdk.sendRequest('users/query.json', 'GET', query, function(data){
     if(data) {
+      Ti.API.log(data);
       if(data.meta) {
         var meta = data.meta;
         if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryUsers') {

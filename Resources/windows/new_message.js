@@ -19,11 +19,13 @@ Ti.include('/messageHandler.js');
   send.addEventListener('click', function () {
     Messages.create({
     	body : message.getValue(),
-    	club : clubPicker.getSelectedRow().getTitle()
+    	club : clubPicker.getSelectedRow(0).getTitle()
     	
+    },function(){
+      alert("This will send...");
+      window.close();    	
     });
-    alert("This will send...");
-    window.close();
+
   });
   
   message = Ti.UI.createTextArea({
