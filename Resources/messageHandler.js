@@ -38,6 +38,7 @@ Messages.create = function(_data,_callback){
   	var postData = {
   	  body : _data.body,
   	  to_ids: userIds,
+  	  subject:_data.subject,
   	  custom_data_fields: JSON.stringify(custom_field)
   	}; 
   	sdk.sendRequest('messages/create.json', 'POST', postData, function(data){
