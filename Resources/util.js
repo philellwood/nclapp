@@ -17,7 +17,9 @@ Util.createSimpleDataTable = function (input, properties) {
   
   return Ti.UI.createTableView(Util.merge(tableProps, {'data': rows}));
 };
-
+Util.theme = {
+  mainColor: '#00477f'
+};
 Util.buildTabGroup = function (data) {
   var index, length, datum, tabs, window;
   
@@ -31,7 +33,7 @@ Util.buildTabGroup = function (data) {
       'title': datum.title || 'No title',
       'url': datum.url || '',
       'backgroundColor': '#fff',
-      'barColor': '#123'
+      'barColor': Util.theme.mainColor
     });
     
     tabs.push(Ti.UI.createTab({
