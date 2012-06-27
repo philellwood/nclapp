@@ -1,8 +1,8 @@
 Ti.include('/util.js');
 Ti.include('/data.js');
 Ti.include('/eventHandler.js');
-(function (window) {
-  var createEvent, settings, requery, table, options, ID, allEvents;
+(function (window, tab) {
+  var createEvent, settings, requery, isRequerying, table, options, ID, allEvents;
   
   ID = "EVENT_OPTIONS";
   
@@ -11,28 +11,32 @@ Ti.include('/eventHandler.js');
     if (!(event.index in allEvents)) return;
     var eventData = allEvents[event.index];
     var viewEvent = Ti.UI.createWindow({
-      url: '/windows/view_event.js',
-      opacity: 0
+      url: '/windows/view_event.js'
     });
     viewEvent.addEventListener('open', function () {
       viewEvent.fireEvent('data', {
         data: eventData
       });
     });
-    viewEvent.open();
+    tab.open(viewEvent);
+    // viewEvent.open();
   });
   window.add(table);
   
+  isRequerying = false;
   requery = function () {
-    Ti.API.info("REQUERYING!");
-
+    // Ti.API.info("REQUERYING!");
+    if (isRequerying) return;
+    isRequerying = true;
+    
     options = Data.load(ID, Util.createSet(Data.getUserClubs()));
     
     Events.queryClub(options, function (events) {
       allEvents = events;
     	table.data = Util.foreach(events, function (index, event) {
-    		return Ti.UI.createTableViewRow({ title: event.name });
+    		return Ti.UI.createTableViewRow({ title: event.name, height: 40 });
     	});
+    	isRequerying = false;
     });
   };
   
@@ -43,14 +47,8 @@ Ti.include('/eventHandler.js');
   });
   createEvent.addEventListener('click', function () {
     var newEvent;
-    newEvent = Ti.UI.createWindow({
-      url: '/windows/new_event.js',
-      navBarHidden: false
-      // modal: true
-    });
-    newEvent.open({
-      transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT
-    });
+    newEvent = Ti.UI.createWindow({ url: '/windows/new_event.js' });
+    newEvent.open({ transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT });
     newEvent.addEventListener('close', function () {
       requery();
     });
@@ -127,4 +125,4 @@ Ti.include('/eventHandler.js');
   // 
   //   window.add(scrollableView);
   
-}).call(Ti.UI.currentWindow, Ti.UI.currentWindow);
+}).call(Ti.UI.currentWindow, Ti.UI.currentWindow, Ti.UI.currentTab);
