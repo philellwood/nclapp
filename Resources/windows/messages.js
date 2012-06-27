@@ -1,10 +1,8 @@
 Ti.include('/util.js');
 Ti.include('/data.js');
 Ti.include('/messageHandler.js');
-(function (window) {
+(function (window, tab) {
   var newMsgButton, refreshBtn, table, refresh, allMessages;
-
-  window.barColor = '#123';
 
   newMsgButton = Ti.UI.createButton({
     title: "New MSG"
@@ -23,15 +21,14 @@ Ti.include('/messageHandler.js');
     if (!(allMessages[event.index])) return;
     var msgData = allMessages[event.index];
     var viewMsg = Ti.UI.createWindow({
-      url: '/windows/view_message.js',
-      opacity: 0
+      url: '/windows/view_message.js'
     });
     viewMsg.addEventListener('open', function () {
       viewMsg.fireEvent('data', {
         data: msgData
       });
     });
-    viewMsg.open();
+    tab.open(viewMsg);
   });
   
   refresh = function () {
@@ -53,4 +50,4 @@ Ti.include('/messageHandler.js');
     refresh(); 	
   });
 
-}).call(Ti.UI.currentWindow, Ti.UI.currentWindow);
+}).call(Ti.UI.currentWindow, Ti.UI.currentWindow, Ti.UI.currentTab);
