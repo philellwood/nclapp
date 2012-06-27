@@ -4,20 +4,29 @@ Ti.include('/clubs_data.js');
 Ti.include('/messageHandler.js');
 Ti.include('/eventHandler.js');
 (function (window) {
-  var cancel, create, nameLabel, name, datePicker, clubPicker, infoWin;
+  var view, cancel, create, nameLabel, name, datePicker, clubPicker, infoWin;
   
   window.updateLayout({
     title: "New Event",
     backgroundColor: '#fff',
-    barColor: '#000'
+    barColor: '#456',
+    layout: 'vertical'
   });
   
-  cancel = (window.leftNavButton = Ti.UI.createButton({ title: "Cancel" }));
+  cancel = (window.leftNavButton = Ti.UI.createButton({
+    title: "Cancel",
+    style: Ti.UI.iPhone.SystemButtonStyle.BORDERED
+  }));
   cancel.addEventListener('click', function () {
-    window.close();
+    window.close({
+      transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT
+    });
   });
   
-  create = (window.rightNavButton = Ti.UI.createButton({ title: "Create" }));
+  create = (window.rightNavButton = Ti.UI.createButton({
+    title: "Create",
+    style: Ti.UI.iPhone.SystemButtonStyle.BORDERED
+  }));
   create.addEventListener('click', function () {
     Events.create({
     	name: name.getValue(),
@@ -26,30 +35,42 @@ Ti.include('/eventHandler.js');
     	details: descr.getValue()
     },function(){
     	window.close();
-    })
-    
+    });
   });
+  
+  (function () {
+    var toolbar, flexSpace, title;
+    flexSpace = Ti.UI.createButton({ systemButton: Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE });
+    title = Ti.UI.createLabel({ text: 'New Event', font: { fontSize: 18, fontWeight: 'bold' }, color: '#fff' });
+    toolbar = Ti.UI.iOS.createToolbar({
+      items: [cancel, flexSpace, title, flexSpace, create], top: -1, barColor: '#123'
+    });
+    window.add(toolbar);
+  })();
+  
+  view = Ti.UI.createScrollView();
+  window.add(view);
   
   nameLabel = Ti.UI.createLabel({
   	top:10, left:5, text:'Event Name:'
   });
-  window.add(nameLabel);
+  view.add(nameLabel);
   name = Ti.UI.createTextField({
   	top:10, left:120, height: 30, width:150,
   	borderWidth: 1, borderColor: '#bbb', borderRadius: 3
   });
-  window.add(name);
+  view.add(name);
 
   dateLabel = Ti.UI.createLabel({
   	top:45, left:5, text:'Event Date:'
   });
-  window.add(dateLabel);
+  view.add(dateLabel);
   
   date = Ti.UI.createTextField({
   	top:45, left:120, height: 30, width:150,
   	borderWidth: 1, borderColor: '#bbb', borderRadius: 3
   });
-  window.add(date);
+  view.add(date);
   
   date.addEventListener('focus',function(event){
     var viewEvent = Ti.UI.createWindow({
@@ -78,15 +99,15 @@ Ti.include('/eventHandler.js');
   clubLabel = Ti.UI.createLabel({
   	top:80, left:5, text:'Club:'
   });
-  window.add(clubLabel);
+  view.add(clubLabel);
   
   club = Ti.UI.createTextField({
   	top:80, left:120, height: 30, width:150,
   	borderWidth: 1, borderColor: '#bbb', borderRadius: 3
   });
-  window.add(club);
+  view.add(club);
   
-    club.addEventListener('focus',function(event){
+  club.addEventListener('focus',function(event){
     var viewEvent = Ti.UI.createWindow({
       url: '/windows/pickerWindow.js',
       opacity: 0
@@ -111,13 +132,13 @@ Ti.include('/eventHandler.js');
   descrLabel = Ti.UI.createLabel({
   	top:125, left:5, text:'Event Description:'
   });
-  window.add(descrLabel);
+  view.add(descrLabel);
   
   descr = Ti.UI.createTextArea({
   	top:150, left:10, bottom: 10, width:300,
   	borderWidth: 1, borderColor: '#bbb', borderRadius: 3
   });
-  window.add(descr); 
+  view.add(descr); 
 /*  clubPicker = Ti.UI.createPicker({ bottom: 0 });
   window.add(clubPicker);
   clubPicker.add((function () {
