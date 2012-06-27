@@ -11,7 +11,7 @@ Ti.include('/data.js');
     
     //  Create the overlay window
     overlay = Ti.UI.createWindow({
-      backgroundColor: '#123',
+      backgroundColor: Util.theme.mainColor,
       opacity: 0
     });
     actInd = Ti.UI.createActivityIndicator({
@@ -51,7 +51,7 @@ Ti.include('/data.js');
   })();
   
   window.updateLayout({
-    backgroundColor: '#345'
+    backgroundColor: Util.theme.mainColor
   });
   
   window.addEventListener('setSuccess', function (event) {
@@ -151,10 +151,9 @@ Ti.include('/data.js');
   	Users.login({
       login:    Data.load("login",    ''),
       password: Data.load("password", '')
-  	}, function(){
-      successFn();
+  	}, function(){  
       hideOverlay();
-      window.close();
+  	  window.fireEvent('login');
   	});
   };
   
