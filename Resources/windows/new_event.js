@@ -48,11 +48,16 @@ Ti.include('/messageHandler.js');
       url: '/windows/pickerWindow.js',
       opacity: 0
     });
+    viewEvent.addEventListener('save', function (result) {
+      date.value = result.data;
+    });
     viewEvent.addEventListener('open', function () {
       viewEvent.fireEvent('data', {
-        type:Titanium.UI.PICKER_TYPE_DATE_AND_TIME,
-        minDate: new Date(),
-        value: new Date()
+        data: {
+          type:Titanium.UI.PICKER_TYPE_DATE_AND_TIME,
+          minDate: new Date(),
+          value: new Date()
+        }
       });
       viewEvent.animate(Ti.UI.createAnimation({
         opacity: 1,
