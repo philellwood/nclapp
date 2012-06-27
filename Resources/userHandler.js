@@ -37,11 +37,11 @@ if (!Users) {
       if(data && data.meta) {
         var meta = data.meta;
         if (meta.status == 'ok' && meta.code == 200 && meta.method_name == 'loginUser') {
-         _success && _success();
+          _success && _success();
+          return;
         }
-      } else {
-        _error && _error();
       }
+      _error && _error();
     });
   };
 
