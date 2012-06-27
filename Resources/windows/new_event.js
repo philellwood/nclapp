@@ -9,7 +9,7 @@ Ti.include('/eventHandler.js');
   window.updateLayout({
     title: "New Event",
     backgroundColor: '#fff',
-    barColor: '#456',
+    barColor: Util.theme.mainColor,
     layout: 'vertical'
   });
   
@@ -18,9 +18,20 @@ Ti.include('/eventHandler.js');
     style: Ti.UI.iPhone.SystemButtonStyle.BORDERED
   }));
   cancel.addEventListener('click', function () {
-    window.close({
-      transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT
+    var dialog = Ti.UI.createAlertDialog({
+      title: 'Cancel', message: 'Discard event?', buttonNames: ['No', 'Yes'], cancel: 0
     });
+    dialog.addEventListener('click', function (e) {
+      if (e.cancel === e.index || e.cancel === true) {
+        return;
+      }
+      if (e.index === 1) {
+        window.close({
+          transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT
+        });
+      }
+    });
+    dialog.show();
   });
   
   create = (window.rightNavButton = Ti.UI.createButton({
@@ -28,20 +39,31 @@ Ti.include('/eventHandler.js');
     style: Ti.UI.iPhone.SystemButtonStyle.BORDERED
   }));
   create.addEventListener('click', function () {
-    Events.create({
-    	name: name.getValue(),
-    	start_time: date.getValue(),
-    	club: club.getValue(),
-    	details: descr.getValue()
-    }, function () {
-    	window.close({
-        transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT
-      });
-      alert("Your event has been created!");
-    }, function (data) {
-      alert('An error occurred!');
-      alert(JSON.stringify(data));
+    var dialog = Ti.UI.createAlertDialog({
+      title: 'Create', message: 'Create this event?', buttonNames: ['No', 'Yes'], cancel: 0
     });
+    dialog.addEventListener('click', function (e) {
+      if (e.cancel === e.index || e.cancel === true) {
+        return;
+      }
+      if (e.index === 1) {
+        Events.create({
+        	name: name.getValue(),
+        	start_time: date.getValue(),
+        	club: club.getValue(),
+        	details: descr.getValue()
+        }, function () {
+        	window.close({
+            transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT
+          });
+          alert("Your event has been created!");
+        }, function (data) {
+          alert('An error occurred!');
+          alert(JSON.stringify(data));
+        });
+      }
+    });
+    dialog.show();
   });
   
   (function () {
@@ -49,7 +71,7 @@ Ti.include('/eventHandler.js');
     flexSpace = Ti.UI.createButton({ systemButton: Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE });
     title = Ti.UI.createLabel({ text: 'New Event', font: { fontSize: 18, fontWeight: 'bold' }, color: '#fff' });
     toolbar = Ti.UI.iOS.createToolbar({
-      items: [cancel, flexSpace, title, flexSpace, create], top: -1, barColor: '#123'
+      items: [cancel, flexSpace, title, flexSpace, create], top: -1, barColor: window.barColor
     });
     window.add(toolbar);
   })();
@@ -86,6 +108,9 @@ Ti.include('/eventHandler.js');
     viewEvent.addEventListener('save', function (result) {
       date.value = result.data;
     });
+    viewEvent.addEventListener('close', function () {
+      viewEvent.close({ opacity: 0, duration: 500 });
+    });
     viewEvent.addEventListener('open', function () {
       viewEvent.fireEvent('data', {
         data: {
@@ -94,10 +119,10 @@ Ti.include('/eventHandler.js');
           value: new Date()
         }
       });
-      viewEvent.animate(Ti.UI.createAnimation({
+      viewEvent.animate({
         opacity: 1,
-        duration : 200
-      }));
+        duration : 500
+      });
     });
     viewEvent.open();
   }); 
@@ -121,16 +146,19 @@ Ti.include('/eventHandler.js');
     viewEvent.addEventListener('save', function (result) {
       club.value = result.data;
     });
+    viewEvent.addEventListener('close', function () {
+      viewEvent.close({ opacity: 0, duration: 500 });
+    });
     viewEvent.addEventListener('open', function () {
       viewEvent.fireEvent('data', {
         data: {
           type:'club'
         }
       });
-      viewEvent.animate(Ti.UI.createAnimation({
+      viewEvent.animate({
         opacity: 1,
-        duration : 200
-      }));
+        duration: 500
+      });
     });
     viewEvent.open();
   }); 
