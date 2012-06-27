@@ -4,13 +4,18 @@ Ti.include('/clubs_data.js');
 (function (window) {
   var table, SELECTED, UNSELECTED, selectedClubs, deleteButton;
 
-  SELECTED = { backgroundColor: '#456', color: '#fff', isSelected: true };
-  UNSELECTED = { backgroundColor: '#fff', color: '#000', isSelected: false };
+  SELECTED = {
+    backgroundColor: Util.theme.mainColor, color: '#fff', isSelected: true, rightImage: '/images/117-todo.png'
+  };
+  UNSELECTED = {
+    backgroundColor: '#fff', color: '#000', isSelected: false, rightImage: ''
+  };
   selectedClubs = Data.getUserClubs();
 
   window.titleControl = (Ti.UI.createSearchBar({
-      barColor: '#123', 
-      height: 44
+    barColor: Util.theme.mainColor, 
+    height: 44,
+    width: 'auto'
   }));
 
   table = Util.createSimpleDataTable(clubsData, {
