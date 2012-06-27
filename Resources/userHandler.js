@@ -19,10 +19,10 @@ if (!Users) {
     }, function (e) {
       if (e.success) {
   		  Ti.API.log(e);
-  		  _success();
+  		  _success && _success();
   		} else {
   		  Ti.API.error(e);
-  		  _error();
+  		  _error && _error();
   		}
   	});
 	};
