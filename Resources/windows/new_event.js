@@ -34,7 +34,9 @@ Ti.include('/eventHandler.js');
     	club: club.getValue(),
     	details: descr.getValue()
     },function(){
-    	window.close();
+    	window.close({
+        transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT
+      });
     });
   });
   
