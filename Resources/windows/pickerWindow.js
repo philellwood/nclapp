@@ -1,37 +1,37 @@
 Ti.include('/util.js');
 Ti.include('/data.js');
 (function (window) {
-  var backdrop, view, close, save, scrollingDescription, description, picker, data;
+  var backdrop, toolbar, close, save, scrollingDescription, description, picker, data;
   window.updateLayout({
     backgroundColor: 'transparent',
     title: 'View Event'
   });
-  window.addEventListener('save', function () {
-    window.close();
-  });
   window.add(backdrop = Ti.UI.createView({
-    backgroundColor: '#def',
-    opacity: 0.8,
+    backgroundColor: Util.theme.mainColor,
+    opacity: 0.5,
     zIndex: 0
   }));
   
-  window.add(view = Ti.UI.createView({
-    top: 43, right: 0, bottom: 50, left: 0,
-    backgroundColor: '#fff',
-    zIndex: 1,
-    layout: 'vertical'
-  }));
-  
-  
-  window.add(close = Ti.UI.createButton({
-    title: 'Cancel', left: 10, bottom: 60, zIndex: 2
-  }));
-  window.add(save = Ti.UI.createButton({
-    title: 'Save', right: 10, bottom: 60, zIndex: 2
-  }));
+  (function () {
+    var space = Ti.UI.createButton({ systemButton: Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE });
+    
+    close = Ti.UI.createButton({
+      title: 'Cancel',
+      style: Titanium.UI.iPhone.SystemButtonStyle.BORDERED
+    });
+    save = Ti.UI.createButton({
+      title: 'Select',
+      style: Titanium.UI.iPhone.SystemButtonStyle.DONE
+    });
+    
+    window.add(toolbar = Ti.UI.iOS.createToolbar({
+      items: [close, space, save],
+      bottom: 0, barColor: Util.theme.mainColor
+    }));
+  })();
   
   close.addEventListener('click', function () {
-    window.close();
+    window.fireEvent('close');
   });
   save.addEventListener('click', function () {
   	var saveData;
@@ -45,21 +45,22 @@ Ti.include('/data.js');
   		};
   	}
     window.fireEvent('save', saveData);
+    window.fireEvent('close');
   });
   
   window.addEventListener('data', function (event) {
     data = event.data;
-    if(!(data.type==='club')){
-    	view.add(picker = Ti.UI.createPicker(data));
-    }else{
-    	picker = Ti.UI.createPicker();
-        picker.add(Util.foreach(Util.keys(Data.getUserClubs()), function (_, title) {
-  	      return Ti.UI.createPickerRow({ title: title });
-        }));
-        picker.selectionIndicator = true;
-        view.add(picker);
-    }
-    
+    var transform = { transform: Ti.UI.create2DMatrix().scale(0.8), width: 400, bottom: 20 };
+    if (!(data.type === 'club')) {
+      picker = Ti.UI.createPicker(Util.merge(transform, data||{}));
+    } else {
+      picker = Ti.UI.createPicker(transform);
+      picker.add(Util.foreach(Util.keys(Data.getUserClubs()), function (_, title) {
+        return Ti.UI.createPickerRow({ title: title });
+      }));
+      picker.selectionIndicator = true;
+    }  
+    window.add(picker);
   });
 }).call(Ti.UI.currentWindow, Ti.UI.currentWindow);
 
