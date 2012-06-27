@@ -9,7 +9,7 @@ Ti.include('/util.js');
   window.updateLayout({
     title: 'Events Options',
     backgroundColor: '#fff',
-    barColor: '#000'
+    barColor: Util.theme.mainColor
   });
   
   cancel = (window.leftNavButton = Ti.UI.createButton({
