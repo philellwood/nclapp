@@ -1,10 +1,61 @@
+Ti.include('/util.js');
 Ti.include('/data.js');
 
 (function (window) {
-  var container, username, password, login, register, rememberMe;
+  var container, username, password, login, register, rememberMe, successFn, showOverlay, hideOverlay, loginAction;
+  
+  successFn = Util.empty;
+  
+  (function () {
+    var overlay, showAnim, hideAnim, actInd;
+    
+    //  Create the overlay window
+    overlay = Ti.UI.createWindow({
+      backgroundColor: '#123',
+      opacity: 0
+    });
+    actInd = Ti.UI.createActivityIndicator({
+      message: 'Loading...',
+      color: '#fff',
+      style: Ti.UI.iPhone.ActivityIndicatorStyle.BIG
+    });
+    overlay.add(actInd);
+    
+    //  Define the showing animation
+    showAnim = Ti.UI.createAnimation({
+      opacity: 0.8,
+      duration: 200
+    });
+    //  Define the hiding animation
+    hideAnim = Ti.UI.createAnimation({
+      opacity: 0,
+      duration: 200
+    });
+    
+    //  Define the event chainings
+    overlay.addEventListener('open', function () {
+      actInd.show();
+      overlay.animate(showAnim);
+    });
+    hideAnim.addEventListener('complete', function () {
+      actInd.hide();
+      overlay.close();
+    });
+    
+    showOverlay = function () {
+      overlay.open();
+    };
+    hideOverlay = function() {
+      overlay.animate(hideAnim);
+    };
+  })();
   
   window.updateLayout({
     backgroundColor: '#345'
+  });
+  
+  window.addEventListener('setSuccess', function (event) {
+    successFn = event.success;
   });
   
   window.add(Ti.UI.createLabel({
@@ -69,18 +120,7 @@ Ti.include('/data.js');
     title: 'Login'
   });
   login.addEventListener('click', function () {
-    Data.save("login",      username.getValue());
-  	Data.save("password",   password.getValue());
-  	Data.save("RememberMe", rememberMe.value);
-  	Users.login({
-  		login:    Data.load("login",    ''),
-  		password: Data.load("password", '')
-  	}, function(){
-      window.close();
-      setTimeout(function () {
-        window.success();
-      }, 0);
-  	});
+    loginAction();
   });
   
   register = Ti.UI.createButton({
@@ -88,13 +128,35 @@ Ti.include('/data.js');
     title: 'Register'
   });
   register.addEventListener('click', function () {
+    showOverlay();
     Users.create({
   		username: username.getValue(),
   		password: password.getValue(),
   		confirmPassword: password.getValue()
+  	}, function () {
+  	  loginAction();
+  	}, function () {
+  	  alert("Couldn't register.");
+  	  hideOverlay();
   	});
   });
   
   container.add(username, password, login, register);
+  
+  loginAction = function () {
+    Data.save("login",      username.getValue());
+  	Data.save("password",   password.getValue());
+  	Data.save("RememberMe", rememberMe.value);
+    showOverlay();
+  	Users.login({
+      login:    Data.load("login",    ''),
+      password: Data.load("password", '')
+  	}, function(){
+      successFn();
+      hideOverlay();
+      window.close();
+  	});
+  };
+  
   
 }).call(Ti.UI.currentWindow, Ti.UI.currentWindow);
