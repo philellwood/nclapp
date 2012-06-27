@@ -21,7 +21,7 @@ var showMain = function () {
     
     {
     	'title': "Settings",
-    	'url': "windows/users.js",
+    	'url': "windows/settings.js",
     	'icon': "/images/157-wrench.png"}
 
   ]).open();
