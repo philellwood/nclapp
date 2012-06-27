@@ -2,7 +2,7 @@ Ti.include('/util.js');
 Ti.include('/data.js');
 
 (function (window) {
-  var container, username, password, login, register, rememberMe, successFn, showOverlay, hideOverlay, loginAction;
+  var title, container, username, password, icons, login, register, rememberMe, successFn, showOverlay, hideOverlay, loginAction;
   
   successFn = Util.empty;
   
@@ -58,74 +58,102 @@ Ti.include('/data.js');
     successFn = event.success;
   });
   
-  window.add(Ti.UI.createLabel({
-    top: 15, height: 30,
+  title = Ti.UI.createLabel({
+    top: 0, height: 60,
+    left: 0, right: 0,
     text: 'NCL App',
+    textAlign: 'center',
     color: '#fff',
-    font: { fontSize: 24, fontWeight: 'bold' }
-  }));
+    font: { fontSize: 18, fontWeight: 'bold' }
+  });
   
-  window.add(Ti.UI.createLabel({
-    text: '   Remember me:',
-    top: 195, height: 45,
-    left: 20, right: 20,
-    color: '#fff',
-    backgroundColor: '#000'
+  container = Ti.UI.createView({
+    top: 43,
+    width: 320, height: 201
+  });
+  window.add(container);
+  
+  
+  container.add(Ti.UI.createLabel({
+    text: 'Remember me:',
+    top: 90, height: 30,
+    left: 10, width: 150,
+    color: '#fff'//'#333'
   }));
   rememberMe = Ti.UI.createSwitch({
-    top: 205, right: 30,
+    top: 90, height: 30, right: 10,
     value: Data.load("RememberMe", false)
   });
   rememberMe.addEventListener('change', function (e) {
     Ti.API.info('Switch value: ' + rememberMe.value);
   });
-  window.add(rememberMe);
-  
-  container = Ti.UI.createView({
-    top: 60,
-    width: 280, height: 135,
-    backgroundColor: '#fff'
-  });
-  window.add(container);
   
   container.add(Ti.UI.createLabel({
     top: 10, height: 30,
     left: 10, width: 100,
     text: 'Username:',
-    color: '#333'
+    color: '#fff'//'#333'
   }));
   username = Ti.UI.createTextField({
     top: 10, height: 30,
     left: 110, right: 10,
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_BEZEL,
+    backgroundColor: '#fff', clearButtonMode: Ti.UI.INPUT_BUTTONMODE_ALWAYS,
     value: rememberMe.value ? Data.load("login", '') : ''
+  });
+  
+  window.addEventListener('open', function () {
+    username.focus();
   });
   
   container.add(Ti.UI.createLabel({
     top: 50, height: 30,
     left: 10, width: 100,
     text: 'Password:',
-    color: '#333'
+    color: '#fff'//'#333'
   }));
   password = Ti.UI.createTextField({
     top: 50, height: 30,
     left: 110, right: 10,
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_BEZEL,
+    backgroundColor: '#fff', clearButtonMode: Ti.UI.INPUT_BUTTONMODE_ALWAYS,
     passwordMask: true,
     value: rememberMe.value ? Data.load("password", '') : ''
   });
   
-  login = Ti.UI.createButton({
-    top: 90, right: 10,
-    title: 'Login'
-  });
-  login.addEventListener('click', function () {
-    loginAction();
+  icons = Ti.UI.createLabel({
+    text: "Icons courtesy of Glyphish",
+    bottom: 10, left: 0, right: 0,
+    font: { fontSize: 12, fontWeight: 'bold' },
+    textAlign: 'center', color: '#fff'//'#333'Util.theme.mainColor,
   });
   
-  register = Ti.UI.createButton({
-    top: 90, left: 10,
-    title: 'Register'
+  container.add(username, password, rememberMe, icons);
+  
+  (function () {
+    var toolbar, space;
+    space = Ti.UI.createButton({ systemButton: Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE });
+    login = Ti.UI.createButton({
+      // top: 90, right: 10,
+      title: 'Login',
+      style: Ti.UI.iPhone.SystemButtonStyle.BORDERED
+    });
+    register = Ti.UI.createButton({
+      // top: 90, left: 10,
+      title: 'Register',
+      style: Ti.UI.iPhone.SystemButtonStyle.BORDERED
+    });
+    
+    toolbar = Ti.UI.iOS.createToolbar({
+      items: [register, space, title, space, login],
+      top: -1, left: 0, right: 0,
+      barColor: Util.theme.mainColor
+    })
+    window.add(toolbar);
+  })();
+  
+  login.addEventListener('click', function () {
+    loginAction();
   });
   register.addEventListener('click', function () {
     showOverlay();
@@ -141,8 +169,6 @@ Ti.include('/data.js');
   	});
   });
   
-  container.add(username, password, login, register);
-  
   loginAction = function () {
     Data.save("login",      username.getValue());
   	Data.save("password",   password.getValue());
@@ -154,13 +180,11 @@ Ti.include('/data.js');
   	}, function(){  
       hideOverlay();
   	  window.fireEvent('login');
+  	}, function () {
+  	  hideOverlay();
+  	  alert("Couldn't log in.");
   	});
   };
   
-  window.add(Ti.UI.createLabel({
-    text: "Icons courtesy of Glyphish",
-    bottom: 20, font: { fontSize: 12, fontWeight: 'bold' },
-    color: '#fff'
-  }));
   
 }).call(Ti.UI.currentWindow, Ti.UI.currentWindow);
