@@ -9,20 +9,20 @@ var showMain = function () {
 
     { 'title': "Messages",
       'url': "windows/messages.js",
-      'icon': "KS_nav_views.png" },
+      'icon': "/images/08-chat.png" },
 
     { 'title': "Events",
       'url': "windows/events.js",
-      'icon': "KS_nav_views.png" },
+      'icon': "/images/88-beer-mug.png" },
 
     { 'title': "Clubs",
       'url': "windows/clubs.js",
-      'icon': "KS_nav_ui.png" },
+      'icon': "/images/112-group.png" },
     
     {
-    	'title':"Users",
+    	'title': "Settings",
     	'url': "windows/users.js",
-    	'icon': "KS_nav_ui.png"}
+    	'icon': "/images/157-wrench.png"}
 
   ]).open();
 };
