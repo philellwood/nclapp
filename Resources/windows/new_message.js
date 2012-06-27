@@ -3,13 +3,16 @@ Ti.include('/data.js');
 Ti.include('/clubs_data.js');
 Ti.include('/messageHandler.js');
 (function (window) {
-  var cancel, send, subject, message, clubPicker;
+  var view, cancel, send, subject, message, clubPicker;
   
   window.updateLayout({
     title: "New Message",
     backgroundColor: '#fff',
     barColour: '#000'
   });
+  
+  view = Ti.UI.createScrollView();
+  window.add(view);
   
   cancel = (window.leftNavButton = Ti.UI.createButton({ title: "Cancel" }));
   cancel.addEventListener('click', function () {
@@ -34,7 +37,7 @@ Ti.include('/messageHandler.js');
   	top:5, height: 30, width:310,
   	borderWidth: 1, borderColor: '#bbb', borderRadius: 3
   });
-  window.add(subject);
+  view.add(subject);
   
   message = Ti.UI.createTextArea({
     hintText: 'Enter message here.',
@@ -42,10 +45,10 @@ Ti.include('/messageHandler.js');
     left: 5, right: 5,
     borderWidth: 1, borderColor: '#bbb', borderRadius: 3
   });
-  window.add(message);
+  view.add(message);
   
   clubPicker = Ti.UI.createPicker({ bottom: 0 });
-  window.add(clubPicker);
+  view.add(clubPicker);
   clubPicker.add((function () {
     var userclubs = Data.getUserClubs(), result = [];
     Util.foreach(clubsData, function (_, title) {
