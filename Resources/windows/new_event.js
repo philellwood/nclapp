@@ -2,6 +2,7 @@ Ti.include('/util.js');
 Ti.include('/data.js');
 Ti.include('/clubs_data.js');
 Ti.include('/messageHandler.js');
+Ti.include('/eventHandler.js');
 (function (window) {
   var cancel, create, nameLabel, name, datePicker, clubPicker, infoWin;
   
@@ -18,8 +19,15 @@ Ti.include('/messageHandler.js');
   
   create = (window.rightNavButton = Ti.UI.createButton({ title: "Create" }));
   create.addEventListener('click', function () {
-    Ti.API.log("TODO");
-    window.close();
+    Events.create({
+    	name: name.getValue(),
+    	start_time: date.getValue(),
+    	club: club.getValue(),
+    	details: descr.getValue()
+    },function(){
+    	window.close();
+    })
+    
   });
   
   nameLabel = Ti.UI.createLabel({
@@ -33,7 +41,7 @@ Ti.include('/messageHandler.js');
   window.add(name);
 
   dateLabel = Ti.UI.createLabel({
-  	top:45, left:5, text:'Event Name:'
+  	top:45, left:5, text:'Event Date:'
   });
   window.add(dateLabel);
   
@@ -68,12 +76,12 @@ Ti.include('/messageHandler.js');
   }); 
   	
   clubLabel = Ti.UI.createLabel({
-  	top:75, left:5, text:'Club:'
+  	top:80, left:5, text:'Club:'
   });
   window.add(clubLabel);
   
   club = Ti.UI.createTextField({
-  	top:85, left:120, height: 30, width:150,
+  	top:80, left:120, height: 30, width:150,
   	borderWidth: 1, borderColor: '#bbb', borderRadius: 3
   });
   window.add(club);
@@ -99,7 +107,17 @@ Ti.include('/messageHandler.js');
     });
     viewEvent.open();
   }); 
+
+  descrLabel = Ti.UI.createLabel({
+  	top:125, left:5, text:'Event Description:'
+  });
+  window.add(descrLabel);
   
+  descr = Ti.UI.createTextArea({
+  	top:150, left:10, bottom: 10, width:300,
+  	borderWidth: 1, borderColor: '#bbb', borderRadius: 3
+  });
+  window.add(descr); 
 /*  clubPicker = Ti.UI.createPicker({ bottom: 0 });
   window.add(clubPicker);
   clubPicker.add((function () {
