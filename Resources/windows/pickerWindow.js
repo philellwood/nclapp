@@ -1,9 +1,12 @@
 Ti.include('/util.js');
 (function (window) {
-  var backdrop, view, scrollingDescription, description, picker;
+  var backdrop, view, close, save, scrollingDescription, description, picker;
   window.updateLayout({
     backgroundColor: 'transparent',
     title: 'View Event'
+  });
+  window.addEventListener('save', function () {
+    window.close();
   });
   window.add(backdrop = Ti.UI.createView({
     backgroundColor: '#def',
@@ -19,22 +22,29 @@ Ti.include('/util.js');
   }));
   
   
+  window.add(close = Ti.UI.createButton({
+    title: 'Cancel', left: 10, bottom: 60, zIndex: 2
+  }));
+  window.add(save = Ti.UI.createButton({
+    title: 'Save', right: 10, bottom: 60, zIndex: 2
+  }));
+  
+  close.addEventListener('click', function () {
+    window.close();
+  });
+  save.addEventListener('click', function () {
+    window.fireEvent('save', {
+      data: picker.value
+    });
+  });
   
   window.addEventListener('data', function (event) {
     var data = event.data;
     view.add(picker = Ti.UI.createPicker({
-  	  type:data.type,
+  	  type: data.type,
   	  minDate: data.minDate,
-  	  value: data.value,
-    }), {
-      left: 10, top: 5, right: 10, height: 275
-    });
-    view.add(close = Ti.UI.createButton({
-      title: 'Close', top: 10
+  	  value: data.value
     }));
-    close.addEventListener('click', function () {
-      window.close();
-    });
   });
 }).call(Ti.UI.currentWindow, Ti.UI.currentWindow);
 
