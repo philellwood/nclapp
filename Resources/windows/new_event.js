@@ -33,10 +33,14 @@ Ti.include('/eventHandler.js');
     	start_time: date.getValue(),
     	club: club.getValue(),
     	details: descr.getValue()
-    },function(){
+    }, function () {
     	window.close({
         transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT
       });
+      alert("Your event has been created!");
+    }, function (data) {
+      alert('An error occurred!');
+      alert(JSON.stringify(data));
     });
   });
   
