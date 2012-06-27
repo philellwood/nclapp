@@ -44,8 +44,11 @@ Ti.include('/eventHandler.js');
   createEvent.addEventListener('click', function () {
     Ti.UI.createWindow({
       url: '/windows/new_event.js',
-      modal: true
-    }).open();
+      navBarHidden: false
+      // modal: true
+    }).open({
+      transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT
+    });
   });
   window.addEventListener('focus', function () {
     window.rightNavButton = Util.isEmptyObject(Data.getUserClubs()) ? undefined : createEvent;
