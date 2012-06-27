@@ -8,7 +8,7 @@ if (!Users) {
   var Cloud = require('ti.cloud');
   Cloud.debug = true;
 
-  Users.create = function(_data){
+  Users.create = function(_data, _success, _error){
   	Cloud.Users.create({
       username: _data.username,
       password: _data.password,
@@ -19,8 +19,10 @@ if (!Users) {
     }, function (e) {
       if (e.success) {
   		  Ti.API.log(e);
+  		  _success();
   		} else {
   		  Ti.API.error(e);
+  		  _error();
   		}
   	});
 	};
