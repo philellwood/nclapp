@@ -158,5 +158,10 @@ Ti.include('/data.js');
   	});
   };
   
+  window.add(Ti.UI.createLabel({
+    text: "Icons courtesy of Glyphish",
+    bottom: 20, font: { fontSize: 12, fontWeight: 'bold' },
+    color: '#fff'
+  }));
   
 }).call(Ti.UI.currentWindow, Ti.UI.currentWindow);
