@@ -42,16 +42,22 @@ Ti.include('/eventHandler.js');
     title: "New Event"
   });
   createEvent.addEventListener('click', function () {
-    Ti.UI.createWindow({
+    var newEvent;
+    newEvent = Ti.UI.createWindow({
       url: '/windows/new_event.js',
       navBarHidden: false
       // modal: true
-    }).open({
+    });
+    newEvent.open({
       transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT
+    });
+    newEvent.addEventListener('close', function () {
+      requery();
     });
   });
   window.addEventListener('focus', function () {
     window.rightNavButton = Util.isEmptyObject(Data.getUserClubs()) ? undefined : createEvent;
+    requery();
   });
   
   settings = (window.leftNavButton = Ti.UI.createButton({
