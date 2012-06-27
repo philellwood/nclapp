@@ -8,7 +8,7 @@ if (!Users) {
   var Cloud = require('ti.cloud');
   Cloud.debug = true;
 
-  Users.create = function(_data, _success, _error){
+  Users.create = function (_data, _success, _error) {
   	Cloud.Users.create({
       username: _data.username,
       password: _data.password,
@@ -18,33 +18,31 @@ if (!Users) {
       custom_fields: JSON.stringify(Data.getUserClubs()) //arrays cant be queried, so store clubs as string
     }, function (e) {
       if (e.success) {
-  		  Ti.API.log(e);
+        // Ti.API.log(e);
   		  _success && _success();
   		} else {
-  		  Ti.API.error(e);
+        Ti.API.error(e);
   		  _error && _error();
   		}
   	});
 	};
 
-  Users.login = function(_data, _callback){
+  Users.login = function (_data, _success, _error) {
     var sdk = new Cocoafish('1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld','GxvXXCNnjESPojJkCXvGBGdjOJD5kc8k');  // app key
     var postData = {
       login: _data.login, 
       password: _data.password
     };
-    sdk.sendRequest('users/login.json', 'POST', postData, function(data){
-      if(data) {
-        Ti.API.info(data);
-        if(data.meta) {
-          var meta = data.meta;
-          if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'loginUser') {
-           _callback && _callback();
-          }
+    sdk.sendRequest('users/login.json', 'POST', postData, function (data) {
+      if(data && data.meta) {
+        var meta = data.meta;
+        if (meta.status == 'ok' && meta.code == 200 && meta.method_name == 'loginUser') {
+         _success && _success();
         }
+      } else {
+        _error && _error();
       }
     });
-
   };
 
   Users.showCurrent = function(_callback){
