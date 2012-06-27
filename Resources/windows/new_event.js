@@ -65,10 +65,42 @@ Ti.include('/messageHandler.js');
       }));
     });
     viewEvent.open();
-  }); 	
+  }); 
+  	
+  clubLabel = Ti.UI.createLabel({
+  	top:75, left:5, text:'Club:'
+  });
+  window.add(clubLabel);
   
+  club = Ti.UI.createTextField({
+  	top:85, left:120, height: 30, width:150,
+  	borderWidth: 1, borderColor: '#bbb', borderRadius: 3
+  });
+  window.add(club);
   
-  clubPicker = Ti.UI.createPicker({ bottom: 0 });
+    club.addEventListener('focus',function(event){
+    var viewEvent = Ti.UI.createWindow({
+      url: '/windows/pickerWindow.js',
+      opacity: 0
+    });
+    viewEvent.addEventListener('save', function (result) {
+      club.value = result.data;
+    });
+    viewEvent.addEventListener('open', function () {
+      viewEvent.fireEvent('data', {
+        data: {
+          type:'club'
+        }
+      });
+      viewEvent.animate(Ti.UI.createAnimation({
+        opacity: 1,
+        duration : 200
+      }));
+    });
+    viewEvent.open();
+  }); 
+  
+/*  clubPicker = Ti.UI.createPicker({ bottom: 0 });
   window.add(clubPicker);
   clubPicker.add((function () {
     var userclubs = Data.getUserClubs(), result = [];
@@ -80,5 +112,5 @@ Ti.include('/messageHandler.js');
     return result;
   })());
   clubPicker.selectionIndicator = true;
-  
+*/  
 }).call(Ti.UI.currentWindow, Ti.UI.currentWindow);

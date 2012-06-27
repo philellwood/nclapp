@@ -1,6 +1,7 @@
 Ti.include('/util.js');
+Ti.include('/data.js');
 (function (window) {
-  var backdrop, view, close, save, scrollingDescription, description, picker;
+  var backdrop, view, close, save, scrollingDescription, description, picker, data;
   window.updateLayout({
     backgroundColor: 'transparent',
     title: 'View Event'
@@ -33,18 +34,32 @@ Ti.include('/util.js');
     window.close();
   });
   save.addEventListener('click', function () {
-    window.fireEvent('save', {
-      data: picker.value
-    });
+  	var saveData;
+  	if(!(data.type==='club')){
+  		saveData = {
+  			data: picker.value
+  		};
+  	}else{
+  		saveData = {
+  			data: picker.getSelectedRow(0).getTitle()
+  		};
+  	}
+    window.fireEvent('save', saveData);
   });
   
   window.addEventListener('data', function (event) {
-    var data = event.data;
-    view.add(picker = Ti.UI.createPicker({
-  	  type: data.type,
-  	  minDate: data.minDate,
-  	  value: data.value
-    }));
+    data = event.data;
+    if(!(data.type==='club')){
+    	view.add(picker = Ti.UI.createPicker(data));
+    }else{
+    	picker = Ti.UI.createPicker();
+        picker.add(Util.foreach(Util.keys(Data.getUserClubs()), function (_, title) {
+  	      return Ti.UI.createPickerRow({ title: title });
+        }));
+        picker.selectionIndicator = true;
+        view.add(picker);
+    }
+    
   });
 }).call(Ti.UI.currentWindow, Ti.UI.currentWindow);
 
