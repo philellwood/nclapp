@@ -6,21 +6,20 @@ var Events = {};
  *  <property name="acs-api-key-development" type="string">1PlafvOb0KsfJhWw68tWkGiVt3IkhjxR</property>
  */
 var sdk = new Cocoafish('1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld','GxvXXCNnjESPojJkCXvGBGdjOJD5kc8k');
-Events.create = function(_data, _callback){
-  var custom_field = {club:_data.club};
+Events.create = function (_data, _callback, _error) {
+  var custom_field = { club: _data.club };
   _data.custom_fields = JSON.stringify(custom_field);
-  sdk.sendRequest('events/create.json', 'POST', _data, function(data){
-    if(data) {
-      if(data.meta) {
-        var meta = data.meta;
-        if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'createEvent') {
-      	  Ti.API.log(data.response);
-      	  _callback && _callback(data.response);
-        }
+  sdk.sendRequest('events/create.json', 'POST', _data, function (data) {
+    if (data && data.meta) {
+      var meta = data.meta;
+      if (meta.status === 'ok' && meta.code === 200 && meta.method_name === 'createEvent') {
+    	  Ti.API.log(data.response);
+    	  _callback && _callback(data.response);
+    	  return;
       }
     }
+    _error && _error(data);
   });
-  
 };
 
 Events.queryClub = function(query,_callback){
