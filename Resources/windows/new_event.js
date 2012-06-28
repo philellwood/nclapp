@@ -150,9 +150,13 @@ Ti.include('/eventHandler.js');
       viewEvent.close({ opacity: 0, duration: 500 });
     });
     viewEvent.addEventListener('open', function () {
+      var add = Util.foreach(Util.keys(Data.getUserClubs()), function (_, title) {
+        return Ti.UI.createPickerRow({ title: title });
+      });
       viewEvent.fireEvent('data', {
         data: {
-          type:'club'
+          type:'club',
+          add:add
         }
       });
       viewEvent.animate({

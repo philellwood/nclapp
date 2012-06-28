@@ -23,8 +23,8 @@ Events.create = function (_data, _callback, _error) {
   });
 };
 
-Events.queryClub = function(query,_callback){
-  var whereString = JSON.stringify(query);
+Events.queryClub = function(_query,_callback){
+  var whereString = JSON.stringify(_query);
   var query = {
     where: whereString
   };
@@ -35,7 +35,7 @@ Events.queryClub = function(query,_callback){
         var meta = data.meta;
         if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryEvents') {
           var events = data.response.events;
-          Ti.API.log(events);
+          //Ti.API.log(events);
           _callback(events);
         }
       }

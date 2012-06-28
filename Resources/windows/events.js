@@ -2,11 +2,63 @@ Ti.include('/util.js');
 Ti.include('/data.js');
 Ti.include('/eventHandler.js');
 (function (window, tab) {
-  var createEvent, settings, requery, isRequerying, table, options, ID, allEvents;
+  var createEvent, settings, clubLabel, club, requery, isRequerying, table, options, ID, allEvents;
   
   ID = "EVENT_OPTIONS";
+  options = Data.load(ID, Util.createSet(Data.getUserClubs()));
   
-  table = Ti.UI.createTableView();
+  clubLabel = Ti.UI.createLabel({
+  	top:5, left:5, text:'From Club:'
+  });
+  window.add(clubLabel);
+  
+  club = Ti.UI.createTextField({
+  	top:5, left:100, height: 30, width:130,
+  	borderWidth: 1, borderColor: '#bbb', borderRadius: 3 	
+  });
+  window.add(club);
+  
+  club.addEventListener('focus',function(event){
+    var viewEvent = Ti.UI.createWindow({
+      url: '/windows/pickerWindow.js',
+      opacity: 0
+    });
+    viewEvent.addEventListener('save', function (result) {
+      club.value = result.data;
+      if (club.getValue() === "All"){
+      	options = Data.load(ID, Util.createSet(Data.getUserClubs()));
+      }else{
+      	options = Util.createSet([club.getValue()]);
+      }
+      requery();
+    });
+    viewEvent.addEventListener('close', function () {
+      viewEvent.close({ opacity: 0, duration: 500 });
+    });
+    viewEvent.addEventListener('open', function () {
+      var titles = Util.keys(Data.getUserClubs());
+      titles.unshift("All");
+     
+      var add = Util.foreach(titles, function (_, title) {
+        return Ti.UI.createPickerRow({ title: title });
+      });
+
+
+      viewEvent.fireEvent('data', {
+        data: {
+          type:'club',
+          add:add
+        }
+      });
+      viewEvent.animate({
+        opacity: 1,
+        duration: 500
+      });
+    });
+    viewEvent.open();
+  }); 
+  
+  table = Ti.UI.createTableView({top:35});
   table.addEventListener('click', function (event) {
     if (!(event.index in allEvents)) return;
     var eventData = allEvents[event.index];
@@ -28,8 +80,6 @@ Ti.include('/eventHandler.js');
     // Ti.API.info("REQUERYING!");
     if (isRequerying) return;
     isRequerying = true;
-    
-    options = Data.load(ID, Util.createSet(Data.getUserClubs()));
     
     Events.queryClub(options, function (events) {
       allEvents = events;

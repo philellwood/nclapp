@@ -24,7 +24,7 @@ Ti.include('/messageHandler.js');
     Messages.create({
     	subject : subject.getValue(),
     	body : message.getValue(),
-    	club : clubsData.getValue()
+    	club : club.getValue()
     	
     },function(){
       alert("This will send...");
@@ -67,9 +67,14 @@ Ti.include('/messageHandler.js');
       viewEvent.close({ opacity: 0, duration: 500 });
     });
     viewEvent.addEventListener('open', function () {
+      
+      var add = Util.foreach(Util.keys(Data.getUserClubs()), function (_, title) {
+        return Ti.UI.createPickerRow({ title: title });
+      });
       viewEvent.fireEvent('data', {
         data: {
-          type:'club'
+          type:'club',
+          add: add
         }
       });
       viewEvent.animate({

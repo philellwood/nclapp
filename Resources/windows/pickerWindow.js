@@ -55,9 +55,10 @@ Ti.include('/data.js');
       picker = Ti.UI.createPicker(Util.merge(transform, data||{}));
     } else {
       picker = Ti.UI.createPicker(transform);
-      picker.add(Util.foreach(Util.keys(Data.getUserClubs()), function (_, title) {
+      picker.add(data.add);
+      	/*Util.foreach(Util.keys(Data.getUserClubs()), function (_, title) {
         return Ti.UI.createPickerRow({ title: title });
-      }));
+      }));*/
       picker.selectionIndicator = true;
     }  
     window.add(picker);
