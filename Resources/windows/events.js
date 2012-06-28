@@ -30,6 +30,7 @@ Ti.include('/eventHandler.js');
       }else{
       	options = Util.createSet([club.getValue()]);
       }
+      Ti.API.log(options);
       requery();
     });
     viewEvent.addEventListener('close', function () {
@@ -81,6 +82,8 @@ Ti.include('/eventHandler.js');
     if (isRequerying) return;
     isRequerying = true;
     
+    Ti.API.log('options', options);
+    
     Events.queryClub(options, function (events) {
       allEvents = events;
     	table.data = Util.foreach(events, function (index, event) {
@@ -90,7 +93,7 @@ Ti.include('/eventHandler.js');
     });
   };
   
-  requery();
+  //requery();
 
   createEvent = Ti.UI.createButton({
     title: "New Event"
