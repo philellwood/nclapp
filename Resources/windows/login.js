@@ -156,16 +156,20 @@ Ti.include('/data.js');
     loginAction();
   });
   register.addEventListener('click', function () {
+  	Ti.API.log('register clicked')
     showOverlay();
-    Users.create({
-  		username: username.getValue(),
-  		password: password.getValue(),
-  		confirmPassword: password.getValue()
-  	}, function () {
-  	  loginAction();
-  	}, function () {
-  	  alert("Couldn't register.");
-  	  hideOverlay();
+    Users.logout(function(){  
+      Ti.API.log("logout callback");
+      Users.create({
+  		  username: username.getValue(),
+  		  password: password.getValue(),
+  		  confirmPassword: password.getValue()
+  	  }, function () {
+  	    loginAction();
+  	  }, function () {
+  	    alert("Couldn't register.");
+  	    hideOverlay();
+  	  });
   	});
   });
   

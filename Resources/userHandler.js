@@ -9,23 +9,28 @@ if (!Users) {
   Cloud.debug = true;
 
   Users.create = function (_data, _success, _error) {
-  	Cloud.Users.create({
+    var sdk = new Cocoafish('1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld','GxvXXCNnjESPojJkCXvGBGdjOJD5kc8k');
+    Ti.API.log("create");
+    sdk.sendRequest('users/create.json', 'POST', {
       username: _data.username,
       password: _data.password,
       password_confirmation: _data.confirmPassword,
-      //first_name: firstName.value,
-      //last_name: lastName.value,
-      custom_fields: JSON.stringify(Data.getUserClubs()) //arrays cant be queried, so store clubs as string
-    }, function (e) {
-      if (e.success) {
-        // Ti.API.log(e);
-  		  _success && _success();
-  		} else {
-        Ti.API.error(e);
-  		  _error && _error();
-  		}
-  	});
-	};
+    }, function(data){
+      Ti.API.log(data);
+      if(data) {
+        if(data.meta) {
+          var meta = data.meta;
+          if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'createUser') {
+            _success;
+          }
+        }
+      }else{
+      	error;
+      }
+    });
+    
+    
+  };
 
   Users.login = function (_data, _success, _error) {
     var sdk = new Cocoafish('1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld','GxvXXCNnjESPojJkCXvGBGdjOJD5kc8k');  // app key
@@ -97,5 +102,21 @@ if (!Users) {
         }  	
       };
     });
-  }
+  };
+  
+  Users.logout = function(_callback){
+    var sdk = new Cocoafish('1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld','GxvXXCNnjESPojJkCXvGBGdjOJD5kc8k');  // app key
+    Ti.API.log('logout');
+    sdk.sendRequest('users/logout.json', 'GET', null, function(data){
+      if(data) {	
+        if(data.meta) {
+          var meta = data.meta;
+          if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'logoutUser') {
+          	Ti.API.log('logout success');
+            _callback && _callback();
+          }
+        }
+      }   	
+    });  	
+  };
 }
