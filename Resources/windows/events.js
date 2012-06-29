@@ -8,12 +8,12 @@ Ti.include('/eventHandler.js');
   options = Util.createSet(Data.getUserClubs());
   
   clubLabel = Ti.UI.createLabel({
-  	top:5, left:5, text:'From Club:'
+  	top:5, left:5, text:'Club:'
   });
   window.add(clubLabel);
   
   club = Ti.UI.createTextField({
-  	top:5, left:100, height: 30, width:130,
+  	top:5, left:50, height: 20, width:130,
   	borderWidth: 1, borderColor: '#bbb', borderRadius: 3, value:"All"	
   });
   window.add(club);
@@ -58,6 +58,17 @@ Ti.include('/eventHandler.js');
     });
     viewEvent.open();
   }); 
+  
+  mineLabel = Ti.UI.createLabel({
+  	top:5, left:185, text:'Mine:'
+  });
+  window.add(mineLabel);
+  
+  mine = Ti.UI.createSwitch({
+  	top:5, left:230, height:20, width:60,
+    value: false
+  });
+  window.add(mine);
   
   table = Ti.UI.createTableView({top:35});
   table.addEventListener('click', function (event) {
@@ -130,7 +141,14 @@ Ti.include('/eventHandler.js');
     requery();
   });
   
-  settings = (window.leftNavButton = Ti.UI.createButton({
+  refreshBtn = (window.leftNavButton = Ti.UI.createButton({
+    title: 'Refresh'
+  }));
+  refreshBtn.addEventListener('click', function () {
+    requery(); 	
+  });
+  
+/*  settings = (window.leftNavButton = Ti.UI.createButton({
     title: "Options",
     style: Ti.UI.iPhone.SystemButtonStyle.BORDERED
   }));
@@ -141,7 +159,7 @@ Ti.include('/eventHandler.js');
       onchange: requery
     }).open();
   });
-
+*/
   // clubsView = createEventsClubs();
   //   mineView = createEventsMine();
   // 
