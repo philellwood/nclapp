@@ -7,7 +7,7 @@ Ti.include('/data.js');
     title: 'View Event'
   });
   window.add(backdrop = Ti.UI.createView({
-    backgroundColor: Util.theme.mainColor,
+    backgroundColor: Util.theme.darkColor,
     opacity: 0.5,
     zIndex: 0
   }));
@@ -26,7 +26,7 @@ Ti.include('/data.js');
     
     window.add(toolbar = Ti.UI.iOS.createToolbar({
       items: [close, space, save],
-      bottom: 0, barColor: Util.theme.mainColor
+      bottom: 0, barColor: Util.theme.darkColor
     }));
   })();
   
