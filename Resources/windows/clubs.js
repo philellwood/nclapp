@@ -5,7 +5,7 @@ Ti.include('/clubs_data.js');
   var table, SELECTED, UNSELECTED, selectedClubs, deleteButton;
 
   SELECTED = {
-    backgroundColor: Util.theme.mainColor, color: '#fff', isSelected: true, rightImage: '/images/117-todo.png'
+    backgroundColor: Util.theme.darkColor, color: '#fff', isSelected: true, rightImage: '/images/117-todo.png'
   };
   UNSELECTED = {
     backgroundColor: '#fff', color: '#000', isSelected: false, rightImage: ''

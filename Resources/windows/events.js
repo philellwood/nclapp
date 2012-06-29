@@ -2,75 +2,75 @@ Ti.include('/util.js');
 Ti.include('/data.js');
 Ti.include('/eventHandler.js');
 (function (window, tab) {
-  var createEvent, settings, clubLabel, club, requery, isRequerying, table, options, ID, allEvents;
+  var createEvent, refreshBtn, mine, club, requery, isRequerying, table, options, ID, allEvents;
   
   ID = "EVENT_OPTIONS";
   options = Util.createSet(Data.getUserClubs());
   
-  clubLabel = Ti.UI.createLabel({
-  	top:5, left:5, text:'Club:'
+  mine = Ti.UI.iOS.createTabbedBar({
+    labels: ['Any', 'Mine'],
+    backgroundColor: Util.theme.darkColor,
+    style: Titanium.UI.iPhone.SystemButtonStyle.BAR,
+    height: 27, index: 0
   });
-  window.add(clubLabel);
   
-  club = Ti.UI.createTextField({
-  	top:5, left:50, height: 20, width:130,
-  	borderWidth: 1, borderColor: '#bbb', borderRadius: 3, value:"All"	
-  });
-  window.add(club);
-  
-  club.addEventListener('focus',function(event){
-    var viewEvent = Ti.UI.createWindow({
-      url: '/windows/pickerWindow.js',
-      opacity: 0
+  (function () {
+    var toolbar, space, label;
+    label = Ti.UI.createLabel({
+      text: 'Events for:', color: '#fff'
     });
-    viewEvent.addEventListener('save', function (result) {
-      club.value = result.data;
-      if (club.getValue() === "All"){
-      	options = Util.createSet(Data.getUserClubs());
-      }else{
-      	options = Util.createSet([club.getValue()]);
-      }
-      Ti.API.log(options);
-      requery();
+    space = Ti.UI.createButton({ systemButton: Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE });
+    club = Ti.UI.createButton({ title: 'Club: All', style: Ti.UI.iPhone.SystemButtonStyle.BORDERED });
+    toolbar = Ti.UI.iOS.createToolbar({
+      items: [club, space, mine],
+      bottom: 0, left: 0, right: 0, barColor: Util.theme.darkColor
     });
-    viewEvent.addEventListener('close', function () {
-      viewEvent.close({ opacity: 0, duration: 500 });
-    });
-    viewEvent.addEventListener('open', function () {
-      var titles = Util.keys(Data.getUserClubs());
-      titles.unshift("All");
-     
-      var add = Util.foreach(titles, function (_, title) {
-        return Ti.UI.createPickerRow({ title: title });
+    window.add(toolbar);
+    
+    club.addEventListener('click',function(event){
+      var viewEvent = Ti.UI.createWindow({
+        url: '/windows/pickerWindow.js',
+        opacity: 0
       });
-
-
-      viewEvent.fireEvent('data', {
-        data: {
-          type:'club',
-          add:add
+      viewEvent.addEventListener('save', function (result) {
+        var value = result.data;
+        club.updateLayout({ title: "Club: " + value });
+        toolbar.items = toolbar.items;
+        Ti.API.log(result);
+        Ti.API.log(value);
+        if (value === "All") {
+        	options = Util.createSet(Data.getUserClubs());
+        } else {
+        	options = Util.createSet([value]);
         }
+        Ti.API.log(options);
+        requery();
       });
-      viewEvent.animate({
-        opacity: 1,
-        duration: 500
+      viewEvent.addEventListener('close', function () { viewEvent.close({ opacity: 0, duration: 500 }); });
+      viewEvent.addEventListener('open', function () {
+        var titles = Util.keys(Data.getUserClubs());
+        titles.unshift("All");
+
+        var add = Util.foreach(titles, function (_, title) {
+          return Ti.UI.createPickerRow({ title: title });
+        });
+        viewEvent.fireEvent('data', {
+          data: {
+            type:'club',
+            add:add
+          }
+        });
+        viewEvent.animate({
+          opacity: 1,
+          duration: 500
+        });
       });
+      viewEvent.open();
     });
-    viewEvent.open();
-  }); 
-  
-  mineLabel = Ti.UI.createLabel({
-  	top:5, left:185, text:'Mine:'
-  });
-  window.add(mineLabel);
-  
-  mine = Ti.UI.createSwitch({
-  	top:5, left:230, height:20, width:60,
-    value: false
-  });
-  window.add(mine);
-  
-  table = Ti.UI.createTableView({top:35});
+    
+  })();
+
+  table = Ti.UI.createTableView({ top: 0, bottom: 41 });
   table.addEventListener('click', function (event) {
   	Ti.API.log(event);
     if (!(event.index in allEvents)) return;
@@ -84,14 +84,11 @@ Ti.include('/eventHandler.js');
       });
     });
     tab.open(viewEvent);
-    // viewEvent.open();
   });
   window.add(table);
   
   isRequerying = false;
   requery = function () {
-    // Ti.API.info("REQUERYING!");
-    
     Ti.API.log(' requery: '+ isRequerying);
     Ti.API.log(options);
     if (isRequerying) return;
@@ -140,7 +137,6 @@ Ti.include('/eventHandler.js');
   });
   window.addEventListener('focus', function () {
     window.rightNavButton = Util.isEmptyObject(Data.getUserClubs()) ? undefined : createEvent;
-    //requery();
   });
   
   refreshBtn = (window.leftNavButton = Ti.UI.createButton({
@@ -149,72 +145,5 @@ Ti.include('/eventHandler.js');
   refreshBtn.addEventListener('click', function () {
     requery(); 	
   });
-  
-/*  settings = (window.leftNavButton = Ti.UI.createButton({
-    title: "Options",
-    style: Ti.UI.iPhone.SystemButtonStyle.BORDERED
-  }));
-  settings.addEventListener('click', function () {
-    Ti.UI.createWindow({
-      url: '/windows/event_options.js',
-      modal: true,
-      onchange: requery
-    }).open();
-  });
-*/
-  // clubsView = createEventsClubs();
-  //   mineView = createEventsMine();
-  // 
-  //   scrollableView = Ti.UI.createScrollableView({
-  //     views: [clubsView, mineView],
-  //     bottom: 0
-  //   });
-  //   scrollableView.addEventListener('scroll', function (event) {
-  //     Util.foreach(toolbarButtons, function (_, btn) {
-  //       btn.backgroundColor = '#fff'; //.style = Ti.UI.iPhone.SystemButtonStyle.BORDERED; //enabled = true;
-  //     });
-  //     toolbarButtons[event.currentPage].backgroundColor = '#000'; //.style = Ti.UI.iPhone.SystemButtonStyle.DONE; //enabled = false;
-  //   });
-  // 
-  //   var toolbarButtons = [];
-  //   window.toolbar = Util.foreach([
-  //     { type: 'button', title: 'Subscribed Events', index: 0 },
-  //     { type: 'space' },
-  //     { type: 'button', title: 'View My Events', index: 1 }
-  //   ], function (_, item) {
-  //     var view;
-  //     if (item.type === 'button') {
-  //       view = Ti.UI.createButton({
-  //         title: item.title,
-  //         style: Ti.UI.iPhone.SystemButtonStyle.BORDERED,
-  //         selectedColor: '#123',
-  //         backgroundColor: '#fff'
-  //       });
-  //       view.addEventListener('click', function () {
-  //         scrollableView.scrollToView(item.index);
-  //       });
-  //       toolbarButtons.push(view);
-  //     } else if (item.type === 'space') {
-  //       view = Ti.UI.createButton({
-  //         systemButton: Titanium.UI.iPhone.SystemButton.FLEXIBLE_SPACE
-  //       });
-  //     }
-  //     return view;
-  //   });
-  //   toolbarButtons[0].backgroundColor = '#000'; // = Ti.UI.iPhone.SystemButtonStyle.DONE; //.enabled = false;
-  //   
-  //   // switchBar = Ti.UI.iOS.createTabbedBar({
-  //   //   labels: ['Clubs', 'Mine'],
-  //   //   backgroundColor: '#336699',
-  //   //   bottom: 0,
-  //   //   height: 40,
-  //   //   style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN,
-  //   //   width: 320
-  //   // });
-  //   // switchBar.addEventListener('click', function (event) {
-  //   //   scrollableView.scrollToView(event.index);
-  //   // });
-  // 
-  //   window.add(scrollableView);
   
 }).call(Ti.UI.currentWindow, Ti.UI.currentWindow, Ti.UI.currentTab);

@@ -18,7 +18,8 @@ Util.createSimpleDataTable = function (input, properties) {
   return Ti.UI.createTableView(Util.merge(tableProps, {'data': rows}));
 };
 Util.theme = {
-  mainColor: '#00477f'
+  mainColor: '#00477f',
+  darkColor: '#002340'
 };
 Util.buildTabGroup = function (data) {
   var index, length, datum, tabs, window;
