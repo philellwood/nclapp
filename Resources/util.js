@@ -18,7 +18,8 @@ Util.createSimpleDataTable = function (input, properties) {
   return Ti.UI.createTableView(Util.merge(tableProps, {'data': rows}));
 };
 Util.theme = {
-  mainColor: '#00477f'
+  mainColor: '#00477f',
+  darkColor: '#002340'
 };
 Util.buildTabGroup = function (data) {
   var index, length, datum, tabs, window;
@@ -192,6 +193,7 @@ Util.createSet = function (seq) {
   } else {
     throw new Error("Couldn't create set from non-array or non-object.");
   }
+  return set;
 };
 
 Util.dataStored = function (id) {
