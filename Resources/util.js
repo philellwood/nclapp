@@ -192,6 +192,7 @@ Util.createSet = function (seq) {
   } else {
     throw new Error("Couldn't create set from non-array or non-object.");
   }
+  return set;
 };
 
 Util.dataStored = function (id) {

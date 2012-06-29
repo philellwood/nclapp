@@ -5,7 +5,7 @@ Ti.include('/eventHandler.js');
   var createEvent, settings, clubLabel, club, requery, isRequerying, table, options, ID, allEvents;
   
   ID = "EVENT_OPTIONS";
-  options = Data.load(ID, Util.createSet(Data.getUserClubs()));
+  options = Util.createSet(Data.getUserClubs());
   
   clubLabel = Ti.UI.createLabel({
   	top:5, left:5, text:'From Club:'
@@ -14,7 +14,7 @@ Ti.include('/eventHandler.js');
   
   club = Ti.UI.createTextField({
   	top:5, left:100, height: 30, width:130,
-  	borderWidth: 1, borderColor: '#bbb', borderRadius: 3 	
+  	borderWidth: 1, borderColor: '#bbb', borderRadius: 3, value:"All"	
   });
   window.add(club);
   
@@ -26,7 +26,7 @@ Ti.include('/eventHandler.js');
     viewEvent.addEventListener('save', function (result) {
       club.value = result.data;
       if (club.getValue() === "All"){
-      	options = Data.load(ID, Util.createSet(Data.getUserClubs()));
+      	options = Util.createSet(Data.getUserClubs());
       }else{
       	options = Util.createSet([club.getValue()]);
       }
@@ -79,18 +79,37 @@ Ti.include('/eventHandler.js');
   isRequerying = false;
   requery = function () {
     // Ti.API.info("REQUERYING!");
+    
+    Ti.API.log(' requery: '+ isRequerying);
+    Ti.API.log(options);
     if (isRequerying) return;
     isRequerying = true;
+     table.data = [];
+    Ti.API.log(Util.createSet(Data.getUserClubs()));
     
-    Ti.API.log('options', options);
-    
-    Events.queryClub(options, function (events) {
-      allEvents = events;
-    	table.data = Util.foreach(events, function (index, event) {
-    		return Ti.UI.createTableViewRow({ title: event.name, height: 40 });
+    if (options.length == 1){
+      Events.queryClub(options, function (events) {
+        allEvents = events;
+    	  table.data = Util.foreach(events, function (index, event) {
+    		  return Ti.UI.createTableViewRow({ title: event.name, height: 40 });
+    	  });
+    	  isRequerying = false;
+      });
+    }else{
+    	var keys = Util.keys(options);
+    	Util.foreach(keys, function(index, club){
+    		var clubObj = Util.createSet([club]);
+    		Events.queryClub(clubObj, function(events){
+    			Util.foreach(events, function (index, event){
+    				var row = Ti.UI.createTableViewRow({ title: event.name, height: 40 });
+    				table.appendRow(row);
+    			});
+    		});
+    		isRequerying = false;
     	});
-    	isRequerying = false;
-    });
+    }
+    
+
   };
   
   //requery();

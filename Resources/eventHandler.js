@@ -8,13 +8,13 @@ var Events = {};
  
 var sdk = new Cocoafish('1PlafvOb0KsfJhWw68tWkGiVt3IkhjxR');
 Events.create = function (_data, _callback, _error) {
-  var custom_field = { club: _data.club };
+  var custom_field = Util.createSet([_data.club]);
   _data.custom_fields = JSON.stringify(custom_field);
   sdk.sendRequest('events/create.json', 'POST', _data, function (data) {
     if (data && data.meta) {
       var meta = data.meta;
       if (meta.status === 'ok' && meta.code === 200 && meta.method_name === 'createEvent') {
-    	  Ti.API.log(data.response);
+    	  Ti.API.log('event.create ',data.response);
     	  _callback && _callback(data.response);
     	  return;
       }
@@ -24,6 +24,7 @@ Events.create = function (_data, _callback, _error) {
 };
 
 Events.queryClub = function(_query,_callback){
+  Ti.API.log(_query);
   var whereString = JSON.stringify(_query);
   var query = {
     where: whereString

@@ -8,7 +8,8 @@ Ti.include('/messageHandler.js');
   window.updateLayout({
     title: "New Message",
     backgroundColor: '#fff',
-    barColour: '#000'
+    barColour: Util.theme.mainColor,
+    layout:'vertical'
   });
   
   view = Ti.UI.createScrollView();
