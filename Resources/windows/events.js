@@ -72,6 +72,7 @@ Ti.include('/eventHandler.js');
   
   table = Ti.UI.createTableView({top:35});
   table.addEventListener('click', function (event) {
+  	Ti.API.log(event);
     if (!(event.index in allEvents)) return;
     var eventData = allEvents[event.index];
     var viewEvent = Ti.UI.createWindow({
@@ -111,7 +112,8 @@ Ti.include('/eventHandler.js');
     	Util.foreach(keys, function(index, club){
     		var clubObj = Util.createSet([club]);
     		Events.queryClub(clubObj, function(events){
-    			Util.foreach(events, function (index, event){
+    			allEvents = events;
+    			Util.foreach(allEvents, function (index, event){
     				var row = Ti.UI.createTableViewRow({ title: event.name, height: 40 });
     				table.appendRow(row);
     			});
@@ -123,7 +125,7 @@ Ti.include('/eventHandler.js');
 
   };
   
-  //requery();
+  requery();
 
   createEvent = Ti.UI.createButton({
     title: "New Event"
@@ -138,7 +140,7 @@ Ti.include('/eventHandler.js');
   });
   window.addEventListener('focus', function () {
     window.rightNavButton = Util.isEmptyObject(Data.getUserClubs()) ? undefined : createEvent;
-    requery();
+    //requery();
   });
   
   refreshBtn = (window.leftNavButton = Ti.UI.createButton({
