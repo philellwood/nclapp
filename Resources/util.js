@@ -219,3 +219,12 @@ Util.onEvent = function (event, delegate) {
 Util.fireEvent = function (event, data) {
   return Ti.App.fireEvent(event, data);
 };
+
+Util.prettifyDate = function(date){
+
+		
+	var prettyDate = '';
+	prettyDate += date.getHours() +':'+date.getMinutes()+' ';
+	prettyDate += date.getDate()+'/'+date.getMonth()+'/'+date.getFullYear();
+	return prettyDate;
+};
