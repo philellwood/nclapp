@@ -85,11 +85,13 @@ if (!Users) {
   Users.getUsersFromClub = function(_club, _callback){
     var sdk = new Cocoafish('1iHEqePuYFs3SFXcaVwNIB4nAx3G99Ld','GxvXXCNnjESPojJkCXvGBGdjOJD5kc8k');  // app key
     var query = {
-      where: Util.createSet([_club])
+      where: JSON.stringify(Util.createSet([_club]))
     };
+    Ti.API.log(query);
     sdk.sendRequest('users/query.json', 'GET', query, function(data){
   	
       if(data) {
+      	Ti.API.log(data);
         if(data.meta) {
           var meta = data.meta;
           if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryUsers') {
