@@ -2,56 +2,13 @@ Ti.include('/util.js');
 Ti.include('/data.js');
 
 (function (window) {
-  var title, container, username, password, icons, login, register, rememberMe, successFn, showOverlay, hideOverlay, loginAction;
+  var title, container, username, password, icons, login, register, rememberMe, overlay, successFn, loginAction;
   
+  overlay = require("/windows/overlay").Create({ message: "Loading..." });
   successFn = Util.empty;
   
-  (function () {
-    var overlay, showAnim, hideAnim, actInd;
-    
-    //  Create the overlay window
-    overlay = Ti.UI.createWindow({
-      backgroundColor: Util.theme.mainColor,
-      opacity: 0
-    });
-    actInd = Ti.UI.createActivityIndicator({
-      message: 'Loading...',
-      color: '#fff',
-      style: Ti.UI.iPhone.ActivityIndicatorStyle.BIG
-    });
-    overlay.add(actInd);
-    
-    //  Define the showing animation
-    showAnim = Ti.UI.createAnimation({
-      opacity: 0.8,
-      duration: 200
-    });
-    //  Define the hiding animation
-    hideAnim = Ti.UI.createAnimation({
-      opacity: 0,
-      duration: 200
-    });
-    
-    //  Define the event chainings
-    overlay.addEventListener('open', function () {
-      actInd.show();
-      overlay.animate(showAnim);
-    });
-    hideAnim.addEventListener('complete', function () {
-      actInd.hide();
-      overlay.close();
-    });
-    
-    showOverlay = function () {
-      overlay.open();
-    };
-    hideOverlay = function() {
-      overlay.animate(hideAnim);
-    };
-  })();
-  
   window.updateLayout({
-    backgroundColor: Util.theme.mainColor
+    backgroundColor: Util.theme.darkColor
   });
   
   window.addEventListener('setSuccess', function (event) {
@@ -157,7 +114,7 @@ Ti.include('/data.js');
   });
   register.addEventListener('click', function () {
   	Ti.API.log('register clicked')
-    showOverlay();
+    overlay.Show();
     Users.logout(function(){  
       Ti.API.log("logout callback");
       Users.create({
@@ -171,7 +128,7 @@ Ti.include('/data.js');
   	    loginAction();
   	  }, function () {
   	    alert("Couldn't register.");
-  	    hideOverlay();
+        overlay.Hide();
   	  });
   	});
   });
@@ -180,15 +137,15 @@ Ti.include('/data.js');
     Data.save("login",      username.getValue());
   	Data.save("password",   password.getValue());
   	Data.save("RememberMe", rememberMe.value);
-    showOverlay();
+  	overlay.Show();
   	Users.login({
       login:    Data.load("login",    ''),
       password: Data.load("password", '')
-  	}, function(){  
-      hideOverlay();
+  	}, function () {
+      overlay.Hide();
   	  window.fireEvent('login');
   	}, function () {
-  	  hideOverlay();
+      overlay.Hide();
   	  alert("Couldn't log in.");
   	});
   };
