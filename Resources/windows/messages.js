@@ -8,11 +8,17 @@ Ti.include('/messageHandler.js');
     title: "New MSG"
   });
   newMsgButton.addEventListener('click', function () {
-    Ti.UI.createWindow({ url: 'new_message.js', modal: true }).open();
+    // Ti.UI.createWindow({ url: 'new_message.js', modal: true }).open();
+    var newMSG;
+    newMSG = Ti.UI.createWindow({ url: '/windows/new_message.js' });
+    newMSG.open({ transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT });
+    newMSG.addEventListener('close', function () {
+      refresh();
+    });
   });
   window.addEventListener('focus', function () {
     window.rightNavButton = Util.isEmptyObject(Data.getUserClubs()) ? undefined : newMsgButton;
-    refresh();
+    // refresh();
   });
   
   table = Ti.UI.createTableView();
