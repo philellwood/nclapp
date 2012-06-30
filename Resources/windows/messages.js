@@ -20,6 +20,9 @@ Ti.include('/messageHandler.js');
     window.rightNavButton = Util.isEmptyObject(Data.getUserClubs()) ? undefined : newMsgButton;
     // refresh();
   });
+  window.addEventListener('open', function () {
+    refresh();
+  });
   
   table = Ti.UI.createTableView();
   window.add(table);
