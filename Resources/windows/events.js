@@ -2,7 +2,7 @@ Ti.include('/util.js');
 Ti.include('/data.js');
 Ti.include('/eventHandler.js');
 (function (window, tab) {
-  var createEvent, refreshBtn, mine, club, requery, isRequerying, table, options, ID, allEvents;
+  var createEvent, refreshBtn, mine, club, clubLabel, requery, isRequerying, table, options, ID, allEvents;
   
   ID = "EVENT_OPTIONS";
   options = Util.createSet(Data.getUserClubs());
@@ -20,9 +20,10 @@ Ti.include('/eventHandler.js');
       text: 'Events for:', color: '#fff'
     });
     space = Ti.UI.createButton({ systemButton: Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE });
-    club = Ti.UI.createButton({ title: 'Club: All', style: Ti.UI.iPhone.SystemButtonStyle.BORDERED });
+    club = Ti.UI.createButton({ title: "Club:", style: Ti.UI.iPhone.SystemButtonStyle.BORDERED });
+    clubLabel = Ti.UI.createLabel({ text: "All", color: "#fff", width: 150 });
     toolbar = Ti.UI.iOS.createToolbar({
-      items: [club, space, mine],
+      items: [club, clubLabel, space, mine],
       bottom: 0, left: 0, right: 0, barColor: Util.theme.darkColor
     });
     window.add(toolbar);
@@ -34,7 +35,7 @@ Ti.include('/eventHandler.js');
       });
       viewEvent.addEventListener('save', function (result) {
         var value = result.data;
-        club.updateLayout({ title: "Club: " + value });
+        clubLabel.text = value;
         toolbar.items = toolbar.items;
         Ti.API.log(result);
         Ti.API.log(value);
