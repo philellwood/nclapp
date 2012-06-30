@@ -71,7 +71,7 @@ Ti.include('/eventHandler.js');
     flexSpace = Ti.UI.createButton({ systemButton: Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE });
     title = Ti.UI.createLabel({ text: 'New Event', font: { fontSize: 18, fontWeight: 'bold' }, color: '#fff' });
     toolbar = Ti.UI.iOS.createToolbar({
-      items: [cancel, flexSpace, title, flexSpace, create], top: -1, barColor: window.barColor
+      items: [cancel, flexSpace, title, flexSpace, create], top: -1, barColor: Util.theme.mainColor
     });
     window.add(toolbar);
   })();
