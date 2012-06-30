@@ -165,6 +165,9 @@ Ti.include('/data.js');
   		  password: password.getValue(),
   		  confirmPassword: password.getValue()
   	  }, function () {
+  	  	alert("Successfully registered.");
+  	    Data.removeAllClubs();
+  	    //hideOverlay();
   	    loginAction();
   	  }, function () {
   	    alert("Couldn't register.");

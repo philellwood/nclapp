@@ -21,11 +21,11 @@ if (!Users) {
         if(data.meta) {
           var meta = data.meta;
           if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'createUser') {
-            _success;
+            _success && _success();
           }
         }
       }else{
-      	error;
+      	_error && _error();
       }
     });
     
