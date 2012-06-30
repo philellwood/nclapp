@@ -2,7 +2,7 @@ Ti.include('/util.js');
 Ti.include('/data.js');
 Ti.include('/clubs_data.js');
 (function (window) {
-  var table, allClubs, tableClubs, SELECTED, UNSELECTED, search, searchField, lastSearched, selectedClubs, deleteButton;
+  var table, allClubs, tableClubs, SELECTED, UNSELECTED, search, searchView, cancelButton, searchField, lastSearched, selectedClubs, deleteButton;
 
   var allClubs = clubsData;
   var tableClubs = allClubs.slice();
@@ -15,25 +15,35 @@ Ti.include('/clubs_data.js');
   };
   selectedClubs = Data.getUserClubs();
   
-  lastSearched = "";
-  searchField = (window.titleControl = Ti.UI.createSearchBar({
+  
+  searchView = (window.titleControl = Ti.UI.createView());
+  
+  searchField = Ti.UI.createSearchBar({
     barColor: Util.theme.mainColor, 
     height: 44,
-    width: 'auto',
-    showCancel: true,
-    value: lastSearched
-  }));
+    width: 150,
+    left: 0
+  });
   searchField.setAutocapitalization(0);
   searchField.setAutocorrect(false);
+  
+  cancelButton = Ti.UI.createButton({
+    right: 0,
+    title: 'Cancel',
+    style: Ti.UI.iPhone.SystemButtonStyle.BORDERED
+  });
+  
+  searchView.add(searchField, cancelButton);
   
   searchField.addEventListener('return', function () {
     search();
   });
-  searchField.addEventListener('cancel', function () {
+  cancelButton.addEventListener('click', function () {
     searchField.value = "";
     search();
   });
   
+  lastSearched = "";
   search = function () {
     var searchReg;
     searchField.blur();
@@ -43,7 +53,8 @@ Ti.include('/clubs_data.js');
       tableClubs = allClubs.slice();
     } else {
       //  Build searching expression
-      searchReg = new RegExp(lastSearched);
+      searchReg = lastSearched.replace(/[^a-z\s]+/g, '').replace(/\s+/g, '|');
+      searchReg = new RegExp('^(?:'+lastSearched+')', "i");
       //  Sort the table by the expression
       tableClubs.sort(function (a, b) { return b.search(searchReg) - a.search(searchReg); });
     }
