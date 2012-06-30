@@ -2,7 +2,7 @@ Ti.include('/util.js');
 Ti.include('/data.js');
 Ti.include('/clubs_data.js');
 (function (window) {
-  var table, SELECTED, UNSELECTED, selectedClubs, deleteButton;
+  var table, SELECTED, UNSELECTED, search, searchField, lastSearched, selectedClubs, deleteButton;
 
   SELECTED = {
     backgroundColor: Util.theme.darkColor, color: '#fff', isSelected: true, rightImage: '/images/117-todo.png'
@@ -11,12 +11,32 @@ Ti.include('/clubs_data.js');
     backgroundColor: '#fff', color: '#000', isSelected: false, rightImage: ''
   };
   selectedClubs = Data.getUserClubs();
-
-  window.titleControl = (Ti.UI.createSearchBar({
+  
+  lastSearched = "";
+  searchField = (window.titleControl = Ti.UI.createSearchBar({
     barColor: Util.theme.mainColor, 
     height: 44,
-    width: 'auto'
+    width: 'auto',
+    showCancel: true,
+    value: lastSearched
   }));
+  searchField.setAutocapitalization(0);
+  searchField.setAutocorrect(false);
+  
+  searchField.addEventListener('return', function () {
+    search();
+  });
+  searchField.addEventListener('cancel', function () {
+    searchField.value = "";
+    search();
+  });
+  
+  search = function () {
+    searchField.blur();
+    lastSearched = searchField.value;
+    // use lastSearched
+    //TODO: SEARCHING
+  };
 
   table = Util.createSimpleDataTable(clubsData, {
     'table': { },
