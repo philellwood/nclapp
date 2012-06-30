@@ -2,8 +2,11 @@ Ti.include('/util.js');
 Ti.include('/data.js');
 Ti.include('/clubs_data.js');
 (function (window) {
-  var table, SELECTED, UNSELECTED, search, searchField, lastSearched, selectedClubs, deleteButton;
+  var table, allClubs, tableClubs, SELECTED, UNSELECTED, search, searchField, lastSearched, selectedClubs, deleteButton;
 
+  var allClubs = clubsData;
+  var tableClubs = allClubs.slice();
+  
   SELECTED = {
     backgroundColor: Util.theme.darkColor, color: '#fff', isSelected: true, rightImage: '/images/117-todo.png'
   };
@@ -32,21 +35,33 @@ Ti.include('/clubs_data.js');
   });
   
   search = function () {
+    var searchReg;
     searchField.blur();
     lastSearched = searchField.value;
-    // use lastSearched
-    //TODO: SEARCHING
+    if (lastSearched === "") {
+      //  Fresh copy of allClubs
+      tableClubs = allClubs.slice();
+    } else {
+      //  Build searching expression
+      searchReg = new RegExp(lastSearched);
+      //  Sort the table by the expression
+      tableClubs.sort(function (a, b) { return b.search(searchReg) - a.search(searchReg); });
+    }
+    //  Refresh the table
+    refreshTable();
+  };
+  
+  refreshTable = function () {
+    table.data = Util.foreach(tableClubs, function (index, club) {
+      var row = Ti.UI.createTableViewRow({
+        height: 40, title: club
+      });
+      row.updateLayout(club in selectedClubs ? SELECTED : UNSELECTED);
+      return row;
+    });
   };
 
-  table = Util.createSimpleDataTable(clubsData, {
-    'table': { },
-    'row': {
-    	height: 40,
-      process: function (club, object) {
-        object.updateLayout(club in selectedClubs ? SELECTED : UNSELECTED);
-      }
-    }
-  });
+  table = Ti.UI.createTableView();
 
   table.addEventListener('click', function (e) {
     Ti.API.log(e);
@@ -65,7 +80,6 @@ Ti.include('/clubs_data.js');
     }
   });
 
-  
   deleteButton = (window.rightNavButton = Ti.UI.createButton({
      title: 'Delete All'
   }));
@@ -93,4 +107,5 @@ Ti.include('/clubs_data.js');
   });
 
   window.add(table);
+  refreshTable();
 }).call(Ti.UI.currentWindow, Ti.UI.currentWindow);
