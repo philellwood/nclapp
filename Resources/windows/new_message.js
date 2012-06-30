@@ -12,27 +12,65 @@ Ti.include('/messageHandler.js');
     layout:'vertical'
   });
   
+  
+  cancel = Ti.UI.createButton({ title: "Cancel", style: Ti.UI.iPhone.SystemButtonStyle.BORDERED });
+  cancel.addEventListener('click', function () {
+    var dialog = Ti.UI.createAlertDialog({
+      title: 'Cancel', message: 'Discard message?', buttonNames: ['No', 'Yes'], cancel: 0
+    });
+    dialog.addEventListener('click', function (e) {
+      if (e.cancel === e.index || e.cancel === true) {
+        return;
+      }
+      if (e.index === 1) {
+        window.close({
+          transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT
+        });
+      }
+    });
+    dialog.show();
+  });
+  
+  send = Ti.UI.createButton({ title: "Send", style: Ti.UI.iPhone.SystemButtonStyle.BORDERED });
+  send.addEventListener('click', function () {
+        var dialog = Ti.UI.createAlertDialog({
+      title: 'Create', message: 'Create this event?', buttonNames: ['No', 'Yes'], cancel: 0
+    });
+    dialog.addEventListener('click', function (e) {
+      if (e.cancel === e.index || e.cancel === true) {
+        return;
+      }
+      if (e.index === 1) {
+        Messages.create({
+          subject : subject.getValue(),
+          body : message.getValue(),
+          club : club.getValue()
+        }, function () {
+          window.close({
+            transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT
+          });
+          alert("Your event has been created!");
+        }, function (data) {
+          alert('An error occurred!');
+          alert(JSON.stringify(data));
+        });
+      }
+    });
+    dialog.show();
+  });
+  
+  (function () {
+    var toolbar, flexSpace, title;
+    flexSpace = Ti.UI.createButton({ systemButton: Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE });
+    title = Ti.UI.createLabel({ text: 'New Message', font: { fontSize: 18, fontWeight: 'bold' }, color: '#fff' });
+    toolbar = Ti.UI.iOS.createToolbar({
+      items: [cancel, flexSpace, title, flexSpace, send], top: -1, barColor: Util.theme.mainColor
+    });
+    window.add(toolbar);
+  })();
+  
   view = Ti.UI.createScrollView();
   window.add(view);
-  
-  cancel = (window.leftNavButton = Ti.UI.createButton({ title: "Cancel" }));
-  cancel.addEventListener('click', function () {
-    window.close();
-  });
-  
-  send = (window.rightNavButton = Ti.UI.createButton({ title: "Send" }));
-  send.addEventListener('click', function () {
-    Messages.create({
-    	subject : subject.getValue(),
-    	body : message.getValue(),
-    	club : club.getValue()
-    	
-    },function(){
-      alert("This will send...");
-      window.close();    	
-    });
-
-  });
   
   subjectLabel = Ti.UI.createLabel({
   	top:10, left:5, text:'Subject:'
