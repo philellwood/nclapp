@@ -15,38 +15,60 @@ Ti.include('/clubs_data.js');
   };
   selectedClubs = Data.getUserClubs();
   
-  
-  searchView = (window.titleControl = Ti.UI.createView());
-  
-  searchField = Ti.UI.createSearchBar({
+  deleteButton = (window.leftNavButton = Ti.UI.createButton({
+    title: 'Delete All',
+    style: Ti.UI.iPhone.SystemButtonStyle.BORDERED
+  }));
+
+  searchField = (window.titleControl = Ti.UI.createSearchBar({
     barColor: Util.theme.mainColor, 
     height: 44,
-    width: 150,
-    left: 0
-  });
+    top: 2
+  }));
   searchField.setAutocapitalization(0);
   searchField.setAutocorrect(false);
   
-  cancelButton = Ti.UI.createButton({
-    right: 0,
+  cancelButton = (window.rightNavButton = Ti.UI.createButton({
     title: 'Cancel',
     style: Ti.UI.iPhone.SystemButtonStyle.BORDERED
+  }));
+ 
+  deleteButton.addEventListener('click', function (e) {
+    var dialog = Ti.UI.createAlertDialog({
+      title: 'Unsubscribe', message: 'Unsubscribe from all clubs?', buttonNames: ['No', 'Yes'], cancel: 0
+    });
+    dialog.addEventListener('click', function (e) {
+      if (e.cancel === e.index || e.cancel === true) {
+        return;
+      }
+      if (e.index === 1) {
+        Data.removeAllClubs();
+        //Ti.API.info("Unsubscribed from all clubs.");
+        // TODO: update layout for all selected rows
+        Util.foreach(table.data[0].rows, function (_, row) {
+          Ti.API.info(row);
+          if (row.isSelected) {
+            row.updateLayout(UNSELECTED);
+          }
+        });
+      }
+    });
+    dialog.show();
   });
-  
-  searchView.add(searchField, cancelButton);
-  
-  searchField.addEventListener('return', function () {
+  searchField.addEventListener('change', function () {
     search();
+  });
+  searchField.addEventListener('return', function () {
+    searchField.blur();
   });
   cancelButton.addEventListener('click', function () {
     searchField.value = "";
-    search();
+    searchField.blur();
   });
   
   lastSearched = "";
   search = function () {
     var searchReg;
-    searchField.blur();
     lastSearched = searchField.value;
     if (lastSearched === "") {
       //  Fresh copy of allClubs
@@ -54,7 +76,7 @@ Ti.include('/clubs_data.js');
     } else {
       //  Build searching expression
       searchReg = lastSearched.replace(/[^a-z\s]+/g, '').replace(/\s+/g, '|');
-      searchReg = new RegExp('^(?:'+lastSearched+')', "i");
+      searchReg = new RegExp('^(?:'+searchReg+')|(?:'+searchReg+')', "i");
       //  Sort the table by the expression
       tableClubs.sort(function (a, b) { return b.search(searchReg) - a.search(searchReg); });
     }
@@ -89,32 +111,6 @@ Ti.include('/clubs_data.js');
     	Data.subscribeToClub(e.rowData.title);
     	Ti.API.log(Data.getUserClubs());
     }
-  });
-
-  deleteButton = (window.rightNavButton = Ti.UI.createButton({
-     title: 'Delete All'
-  }));
-  deleteButton.addEventListener('click', function (e) {
-    var dialog = Ti.UI.createAlertDialog({
-      title: 'Unsubscribe', message: 'Unsubscribe from all clubs?', buttonNames: ['No', 'Yes'], cancel: 0
-    });
-    dialog.addEventListener('click', function (e) {
-      if (e.cancel === e.index || e.cancel === true) {
-        return;
-      }
-      if (e.index === 1) {
-        Data.removeAllClubs();
-        //Titanium.API.info("Unsubscribed from all clubs.");
-        // TODO: update layout for all selected rows
-        Util.foreach(table.data[0].rows, function (_, row) {
-          Ti.API.info(row);
-        	if (row.isSelected) {
-        	  row.updateLayout(UNSELECTED);
-      	  }
-        });
-      }
-    });
-    dialog.show();
   });
 
   window.add(table);
