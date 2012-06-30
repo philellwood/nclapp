@@ -22,13 +22,25 @@ Ti.include('/clubs_data.js');
   }));
   searchField.setAutocapitalization(0);
   searchField.setAutocorrect(false);
+ 
+  var tblSearch = Titanium.UI.createSearchBar({
+        height: 0,
+        visible: false
+  });
   
-  searchField.addEventListener('return', function () {
-    search();
+  searchField.addEventListener('return', function (e) {
+  	tblSearch.value = e.value;
+  	searchField.blur();
+    //search();
+  });
+  
+  searchField.addEventListener('change', function (e) {
+  	Ti.API.log(e);
+  	tblSearch.value = e.value;
   });
   searchField.addEventListener('cancel', function () {
     searchField.value = "";
-    search();
+    //search();
   });
   
   search = function () {
@@ -47,6 +59,8 @@ Ti.include('/clubs_data.js');
       }
     }
   });
+  
+  table.search=tblSearch;
 
   table.addEventListener('click', function (e) {
     Ti.API.log(e);
