@@ -192,6 +192,4 @@ Ti.include('/data.js');
   	  alert("Couldn't log in.");
   	});
   };
-  
-  
 }).call(Ti.UI.currentWindow, Ti.UI.currentWindow);
