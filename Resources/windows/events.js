@@ -1,17 +1,23 @@
 Ti.include('/util.js');
 Ti.include('/data.js');
 Ti.include('/eventHandler.js');
+Ti.include('/userHandler.js');
 (function (window, tab) {
-  var createEvent, refreshBtn, mine, club, clubLabel, requery, isRequerying, table, options, ID, allEvents;
+  var createEvent, refreshBtn, mineTab, mine, club, clubLabel, requery, isRequerying, table, options, ID, allEvents;
   
   ID = "EVENT_OPTIONS";
   options = Util.createSet(Data.getUserClubs());
   
-  mine = Ti.UI.iOS.createTabbedBar({
+  mineTab = Ti.UI.iOS.createTabbedBar({
     labels: ['Any', 'Mine'],
     backgroundColor: Util.theme.darkColor,
     style: Titanium.UI.iPhone.SystemButtonStyle.BAR,
     height: 27, index: 0
+  });
+  
+  mineTab.addEventListener('click', function(e){
+  	mine = e.index;
+  	requery();
   });
   
   (function () {
@@ -23,7 +29,7 @@ Ti.include('/eventHandler.js');
     club = Ti.UI.createButton({ title: "Club:", style: Ti.UI.iPhone.SystemButtonStyle.BORDERED });
     clubLabel = Ti.UI.createLabel({ text: "All", color: "#fff", width: 150 });
     toolbar = Ti.UI.iOS.createToolbar({
-      items: [club, clubLabel, space, mine],
+      items: [club, clubLabel, space, mineTab],
       bottom: 0, left: 0, right: 0, barColor: Util.theme.darkColor
     });
     window.add(toolbar);
@@ -95,9 +101,16 @@ Ti.include('/eventHandler.js');
     if (isRequerying) return;
     isRequerying = true;
      table.data = [];
-    Ti.API.log(Util.createSet(Data.getUserClubs()));
+
+    
+
+    
+    Ti.API.log(options);
     
     if (options.length == 1){
+      if(mine){
+        options.user_id = Data.load("userID")
+      }
       Events.queryClub(options, function (events) {
         allEvents = events;
     	  table.data = Util.foreach(events, function (index, event) {
@@ -109,6 +122,9 @@ Ti.include('/eventHandler.js');
     	var keys = Util.keys(options);
     	Util.foreach(keys, function(index, club){
     		var clubObj = Util.createSet([club]);
+    		if (mine){
+    			clubObj.user_id = Data.load("userID");
+    		}
     		Events.queryClub(clubObj, function(events){
     			allEvents = events;
     			Util.foreach(allEvents, function (index, event){

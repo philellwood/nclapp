@@ -42,7 +42,8 @@ if (!Users) {
       if(data && data.meta) {
         var meta = data.meta;
         if (meta.status == 'ok' && meta.code == 200 && meta.method_name == 'loginUser') {
-          _success && _success();
+          Ti.API.log(data);
+          _success && _success(data.response.users[0]);
           return;
         }
       }

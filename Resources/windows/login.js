@@ -141,9 +141,11 @@ Ti.include('/data.js');
   	Users.login({
       login:    Data.load("login",    ''),
       password: Data.load("password", '')
-  	}, function () {
+  	}, function (users) {
       overlay.Hide();
   	  window.fireEvent('login');
+  	  Ti.API.log(users.id);
+      Data.save("userID", users.id);
   	}, function () {
       overlay.Hide();
   	  alert("Couldn't log in.");
