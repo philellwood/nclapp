@@ -23,7 +23,8 @@ Ti.include('/clubs_data.js');
   searchField = (window.titleControl = Ti.UI.createSearchBar({
     barColor: Util.theme.mainColor, 
     height: 44,
-    top: 2
+    top: 2,
+    width: 170
   }));
   searchField.setAutocapitalization(0);
   searchField.setAutocorrect(false);
